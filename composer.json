@@ -1,0 +1,31 @@
+{
+  "name": "vaened/php-price-engine",
+  "description": "A powerful pricing calculator for products and services, with comprehensive tax and discount calculations.",
+  "require": {
+    "php": "^8.1",
+    "vaened/support": "^0.2.0",
+    "lambdish/phunctional": "^2.1",
+    "brick/money": "^0.8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.2",
+    "symfony/var-dumper": "^6.3"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Vaened\\PriceEngine\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Vaened\\PriceEngine\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Enea Dhack",
+      "email": "enea.so@live.com"
+    }
+  ]
+}
