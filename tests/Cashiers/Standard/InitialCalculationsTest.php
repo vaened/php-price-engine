@@ -10,6 +10,8 @@ namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
 use Vaened\PriceEngine\Adjusters\Tax;
 use Vaened\PriceEngine\Money\Charge;
 use Vaened\PriceEngine\Money\Discount;
+use Vaened\PriceEngine\Tests\Utils\ChargeCode;
+use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;
 use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
@@ -34,13 +36,13 @@ final class InitialCalculationsTest extends StandardCashierTestCase
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3223, Charge::percentagely(5)->named('POS')),
-            self::createAdjustment(10.0, Charge::uniformly(10)->named('RANDOM')),
+            self::createAdjustment(41.3223, Charge::percentagely(5)->named(ChargeCode::POS)),
+            self::createAdjustment(10.0, Charge::uniformly(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5289, Discount::percentagely(2)->named('NEW_USERS')),
-            self::createAdjustment(5.0, Discount::uniformly(5)->named('PROMOTIONAL')),
+            self::createAdjustment(16.5289, Discount::percentagely(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(5.0, Discount::uniformly(5)->named(DiscountCode::Promotional)),
         );
     }
 }

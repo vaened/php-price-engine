@@ -16,6 +16,8 @@ use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\Money\Charge;
 use Vaened\PriceEngine\Money\Discount;
 use Vaened\PriceEngine\Tests\Cashiers\CashierTestCase;
+use Vaened\PriceEngine\Tests\Utils\ChargeCode;
+use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
 abstract class StandardCashierTestCase extends CashierTestCase
@@ -33,12 +35,12 @@ abstract class StandardCashierTestCase extends CashierTestCase
                 Tax\Inclusive::percentagely(18, TaxCode::IGV),
             ]),
             charges    : Adjusters::from([
-                Charge::percentagely(5)->named('POS'),
-                Charge::uniformly(10)->named('RANDOM'),
+                Charge::percentagely(5)->named(ChargeCode::POS),
+                Charge::uniformly(10)->named(ChargeCode::Delivery),
             ]),
             subtractors: Adjusters::from([
-                Discount::percentagely(2)->named('NEW_USERS'),
-                Discount::uniformly(5)->named('PROMOTIONAL'),
+                Discount::percentagely(2)->named(DiscountCode::NewUsers),
+                Discount::uniformly(5)->named(DiscountCode::Promotional),
             ])
         );
     }
