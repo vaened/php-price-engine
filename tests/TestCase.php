@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests;
 
+use Brick\Money\Context\CustomContext;
 use Brick\Money\Money;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Vaened\PriceEngine\Adjusters\AdjusterScheme;
@@ -17,7 +18,10 @@ abstract class TestCase extends PhpUnitTestCase
 {
     private static Money $money;
 
-    abstract protected static function defaultAmount(): Money;
+    protected static function defaultAmount(): Money
+    {
+        return Money::zero('USD', new CustomContext(4));
+    }
 
     protected static function collect(iterable $adjustments): Adjustments
     {

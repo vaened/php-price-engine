@@ -23,11 +23,6 @@ use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
 final class ComplexCashierTest extends CashierTestCase
 {
-    protected static function defaultAmount(): Money
-    {
-        return Money::zero('USD', new CustomContext(4));
-    }
-
     public function test_initial_calculations_are_correct(): void
     {
         $this->assertTotals(
