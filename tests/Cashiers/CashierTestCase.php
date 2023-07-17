@@ -51,7 +51,7 @@ abstract class CashierTestCase extends TestCase
         $this->assertSubtotal($summary->subtotal());
         $this->assertTotalTaxes($summary->totalTaxes());
         $this->assertTotalCharges($summary->totalCharges());
-        $this->assertTotaDiscounts($summary->totaDiscounts());
+        $this->assertTotaDiscounts($summary->totalDiscounts());
         $this->assertTotal($summary->total());
     }
 
@@ -116,11 +116,11 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotaDiscounts(Money $totaDiscounts): void
     {
-        $this->assertEquals($this->cashier->totaDiscounts(), $totaDiscounts,
+        $this->assertEquals($this->cashier->totalDiscounts(), $totaDiscounts,
             sprintf(
                 'Failed asserting that the tota discounts of <%s> equals <%s>.',
                 $totaDiscounts->getAmount(),
-                $this->cashier->totaDiscounts()->getAmount()
+                $this->cashier->totalDiscounts()->getAmount()
             ));
     }
 

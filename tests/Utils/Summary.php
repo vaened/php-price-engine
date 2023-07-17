@@ -111,7 +111,7 @@ final class Summary implements TotalSummary
         return $this->totalCharges;
     }
 
-    public function totaDiscounts(): Money
+    public function totalDiscounts(): Money
     {
         return $this->totalDiscounts;
     }

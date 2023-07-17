@@ -21,7 +21,7 @@ interface TotalSummary
 
     public function totalCharges(): Money;
 
-    public function totaDiscounts(): Money;
+    public function totalDiscounts(): Money;
 
     public function total(): Money;
 }
