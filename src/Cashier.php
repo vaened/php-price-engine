@@ -143,7 +143,7 @@ abstract class Cashier implements TotalSummary
         );
     }
 
-    public function totaDiscounts(): Money
+    public function totalDiscounts(): Money
     {
         return $this->subtractors->apply(
             $this->price->discountable()->multipliedBy($this->quantity)
@@ -155,7 +155,7 @@ abstract class Cashier implements TotalSummary
         return $this->subtotal()
             ->plus($this->totalTaxes())
             ->plus($this->totalCharges())
-            ->minus($this->totaDiscounts());
+            ->minus($this->totalDiscounts());
     }
 
     protected function syncUniPrice(): void
