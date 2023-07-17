@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine;
 
-
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
@@ -52,7 +51,7 @@ abstract class Cashier implements TotalSummary
 
     public function apply(Discount ...$discounts): void
     {
-        each(static fn(Discount $discount) => $this->subtractors->create($discount), $discounts);
+        each(fn(Discount $discount) => $this->subtractors->create($discount), $discounts);
         $this->syncUniPrice();
     }
 
@@ -76,7 +75,7 @@ abstract class Cashier implements TotalSummary
 
     public function add(Charge ...$charges): void
     {
-        each(static fn(Charge $charge) => $this->charges->create($charge), $charges);
+        each(fn(Charge $charge) => $this->charges->create($charge), $charges);
         $this->syncUniPrice();
     }
 
@@ -153,9 +152,9 @@ abstract class Cashier implements TotalSummary
     public function total(): Money
     {
         return $this->subtotal()
-            ->plus($this->totalTaxes())
-            ->plus($this->totalCharges())
-            ->minus($this->totalDiscounts());
+                    ->plus($this->totalTaxes())
+                    ->plus($this->totalCharges())
+                    ->minus($this->totalDiscounts());
     }
 
     protected function syncUniPrice(): void
