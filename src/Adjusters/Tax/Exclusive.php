@@ -1,0 +1,30 @@
+<?php
+/**
+ * @author enea dhack <enea.so@live.com>
+ */
+
+declare(strict_types=1);
+
+namespace Vaened\PriceEngine\Adjusters\Tax;
+
+use BackedEnum;
+use UnitEnum;
+use Vaened\PriceEngine\Adjusters\AdjusterType;
+
+final class Exclusive extends Taxation
+{
+    public static function percentagely(int $percentage, BackedEnum|UnitEnum|string $code): self
+    {
+        return new self(AdjusterType::Percentage, $percentage, $code);
+    }
+
+    public static function uniformly(float $amount, BackedEnum|UnitEnum|string $code): self
+    {
+        return new self(AdjusterType::Uniform, $amount, $code);
+    }
+
+    public function isInclusive(): bool
+    {
+        return false;
+    }
+}
