@@ -18,6 +18,7 @@ use function Lambdish\Phunctional\each;
 
 final class AdjustmentManager
 {
+    private const IDENTICAL = 0;
     protected Adjustments $adjustments;
     private BigDecimal    $lasAmount;
     private Money         $subtotal;
@@ -89,10 +90,10 @@ final class AdjustmentManager
     protected function breakdownAdjustment(): void
     {
         $subtotal          = $this->subtotal();
-        $this->adjustments = Adjustments::from(
+        $this->adjustments = new Adjustments(
+            $this->adjusters->map($this->createAdjustment($subtotal)),
             $subtotal->getCurrency(),
             $subtotal->getContext(),
-            $this->adjusters->map($this->createAdjustment($subtotal))
         );
     }
 
@@ -112,7 +113,7 @@ final class AdjustmentManager
     {
         $current = $this->subtotal()->getAmount()->toBigDecimal();
 
-        if ($this->lasAmount->compareTo($current) === 0) {
+        if ($this->lasAmount->compareTo($current) === self::IDENTICAL) {
             return false;
         }
 

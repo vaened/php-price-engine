@@ -25,7 +25,8 @@ abstract class TestCase extends PhpUnitTestCase
 
     protected static function collect(iterable $adjustments): Adjustments
     {
-        return Adjustments::from(static::defaultMoney()->getCurrency(), static::defaultMoney()->getContext(), $adjustments);
+        $default = self::defaultAmount();
+        return new Adjustments($adjustments, $default->getCurrency(), $default->getContext());
     }
 
     protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Adjustment
