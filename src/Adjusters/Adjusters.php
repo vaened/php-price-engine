@@ -9,8 +9,10 @@ namespace Vaened\PriceEngine\Adjusters;
 
 use BackedEnum;
 use UnitEnum;
+use Vaened\PriceEngine\Helper;
 use Vaened\PriceEngine\Money\Adjuster;
 use Vaened\Support\Types\ArrayObject;
+use function Lambdish\Phunctional\filter;
 
 class Adjusters extends ArrayObject
 {
@@ -21,7 +23,10 @@ class Adjusters extends ArrayObject
 
     public function remove(BackedEnum|UnitEnum|string $code): void
     {
-        $this->items = $this->filter(static fn(Adjuster $adjuster) => $adjuster->code() !== $code);
+        $this->items = filter(
+            static fn(Adjuster $adjuster) => $adjuster->code() !== Helper::processEnumerableCode($code),
+            $this->items
+        );
     }
 
     public function create(Adjuster $adjuster): void
