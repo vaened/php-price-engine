@@ -32,17 +32,17 @@ final class InitialCalculationsTest extends StandardCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(173.5537, Tax\Inclusive::percentagely(21, TaxCode::IVA)),
+            self::createAdjustment(173.5537, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3223, Charge::percentagely(5)->named(ChargeCode::POS)),
-            self::createAdjustment(10.0, Charge::uniformly(10)->named(ChargeCode::Delivery)),
+            self::createAdjustment(41.3223, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5289, Discount::percentagely(2)->named(DiscountCode::NewUsers)),
-            self::createAdjustment(5.0, Discount::uniformly(5)->named(DiscountCode::Promotional)),
+            self::createAdjustment(16.5289, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
         );
     }
 }

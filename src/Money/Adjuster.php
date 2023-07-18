@@ -30,12 +30,12 @@ class Adjuster implements MoneyAdjuster
         $this->code = Helper::processEnumerableCode($code);
     }
 
-    public static function percentagely(int $percentage): static
+    public static function proporcional(int $percentage): static
     {
         return new static(AdjusterType::Percentage, $percentage);
     }
 
-    public static function uniformly(float $amount): static
+    public static function fixed(float $amount): static
     {
         return new static(AdjusterType::Uniform, $amount);
     }

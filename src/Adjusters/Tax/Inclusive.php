@@ -13,12 +13,12 @@ use Vaened\PriceEngine\Adjusters\AdjusterType;
 
 final class Inclusive extends Taxation
 {
-    public static function percentagely(int $percentage, BackedEnum|UnitEnum|string $code): self
+    public static function proporcional(int $percentage, BackedEnum|UnitEnum|string $code): self
     {
         return new self(AdjusterType::Percentage, $percentage, $code);
     }
 
-    public static function uniformly(float $amount, BackedEnum|UnitEnum|string $code): self
+    public static function fixed(float $amount, BackedEnum|UnitEnum|string $code): self
     {
         return new self(AdjusterType::Uniform, $amount, $code);
     }

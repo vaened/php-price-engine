@@ -20,8 +20,8 @@ final class ApplyDiscountsTest extends StandardCashierTestCase
     public function test_apply_discount_recalculate_all_totals(): void
     {
         $this->cashier->apply(
-            Discount::percentagely(3)->named('TESTING-3%'),
-            Discount::percentagely(7)->named('TESTING-7%'),
+            Discount::proporcional(3)->named('TESTING-3%'),
+            Discount::proporcional(7)->named('TESTING-7%'),
         );
 
         $this->assertTotals(
@@ -37,19 +37,19 @@ final class ApplyDiscountsTest extends StandardCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(173.5537, Tax\Inclusive::percentagely(21, TaxCode::IVA)),
+            self::createAdjustment(173.5537, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3223, Charge::percentagely(5)->named(ChargeCode::POS)),
-            self::createAdjustment(10.0, Charge::uniformly(10)->named(ChargeCode::Delivery)),
+            self::createAdjustment(41.3223, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5289, Discount::percentagely(2)->named(DiscountCode::NewUsers)),
-            self::createAdjustment(5.0, Discount::uniformly(5)->named(DiscountCode::Promotional)),
-            self::createAdjustment(24.7934, Discount::percentagely(3)->named('TESTING-3%')),
-            self::createAdjustment(57.8512, Discount::percentagely(7)->named('TESTING-7%')),
+            self::createAdjustment(16.5289, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
+            self::createAdjustment(24.7934, Discount::proporcional(3)->named('TESTING-3%')),
+            self::createAdjustment(57.8512, Discount::proporcional(7)->named('TESTING-7%')),
         );
     }
 }

@@ -12,4 +12,5 @@ enum TaxCode
     case Imaginary;
     case IGV;
     case IVA;
+    case ISC;
 }
