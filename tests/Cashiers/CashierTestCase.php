@@ -18,7 +18,9 @@ use function sprintf;
 
 abstract class CashierTestCase extends TestCase
 {
-    private readonly Cashier $cashier;
+    protected readonly Cashier $cashier;
+
+    abstract protected function cashier(): Cashier;
 
     public function assertDiscounts(Adjustment ...$expected): void
     {
@@ -60,8 +62,6 @@ abstract class CashierTestCase extends TestCase
         parent::setUp();
         $this->cashier = $this->cashier();
     }
-
-    abstract protected function cashier(): Cashier;
 
     private function assertAdjustmentEquals(Adjustments $expected): callable
     {
