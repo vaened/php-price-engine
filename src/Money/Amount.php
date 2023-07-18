@@ -31,7 +31,7 @@ final class Amount implements Priceable
         return new self($unitPrice, applicableTaxCodes: $codes);
     }
 
-    public function taxexempt(Money $unitPrice): self
+    public static function taxexempt(Money $unitPrice): self
     {
         return new self($unitPrice, applicableTaxCodes: TaxCodes::none());
     }
