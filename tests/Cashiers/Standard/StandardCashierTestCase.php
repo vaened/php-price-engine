@@ -29,16 +29,16 @@ abstract class StandardCashierTestCase extends CashierTestCase
                 self::money(100),
                 TaxCodes::only([TaxCode::IVA])
             ),
-            quantity   : 10,
-            taxes      : Taxes::from([
+            quantity : 10,
+            taxes    : Taxes::from([
                 Tax\Inclusive::percentagely(21, TaxCode::IVA),
                 Tax\Inclusive::percentagely(18, TaxCode::IGV),
             ]),
-            charges    : Adjusters::from([
+            charges  : Adjusters::from([
                 Charge::percentagely(5)->named(ChargeCode::POS),
                 Charge::uniformly(10)->named(ChargeCode::Delivery),
             ]),
-            subtractors: Adjusters::from([
+            discounts: Adjusters::from([
                 Discount::percentagely(2)->named(DiscountCode::NewUsers),
                 Discount::uniformly(5)->named(DiscountCode::Promotional),
             ])
