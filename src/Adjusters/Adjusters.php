@@ -12,13 +12,19 @@ use UnitEnum;
 use Vaened\PriceEngine\Helper;
 use Vaened\PriceEngine\Money\Adjuster;
 use Vaened\Support\Types\ArrayObject;
+
 use function Lambdish\Phunctional\filter;
 
 class Adjusters extends ArrayObject
 {
-    public function __construct(iterable $items)
+    public function __construct(array $items)
     {
         parent::__construct($items);
+    }
+
+    public static function from(array $items): self
+    {
+        return new self($items);
     }
 
     public function remove(BackedEnum|UnitEnum|string $code): void

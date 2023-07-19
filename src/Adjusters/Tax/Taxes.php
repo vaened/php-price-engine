@@ -11,10 +11,21 @@ use Brick\Money\Money;
 use Vaened\PriceEngine\Adjusters\Adjusters;
 use Vaened\PriceEngine\Helper;
 use Vaened\Support\Types\ArrayObject;
+
 use function in_array;
 
 final class Taxes extends ArrayObject
 {
+    public static function from(array $items): self
+    {
+        return new self($items);
+    }
+
+    public static function empty(): self
+    {
+        return new self([]);
+    }
+
     public function toAdjusters(): Adjusters
     {
         return Adjusters::from(
@@ -42,7 +53,7 @@ final class Taxes extends ArrayObject
     public function clean(Money $money): Money
     {
         return $this->filter($this->inclusives())
-            ->reduce($this->breakdown(), $money);
+                    ->reduce($this->breakdown(), $money);
     }
 
     protected function type(): string
@@ -71,5 +82,4 @@ final class Taxes extends ArrayObject
     {
         return static fn(Taxation $taxation) => in_array($taxation->code(), $codes, true);
     }
-
 }

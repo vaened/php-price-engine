@@ -23,7 +23,7 @@ abstract class TestCase extends PhpUnitTestCase
         return Money::zero('USD', new CustomContext(4));
     }
 
-    protected static function collect(iterable $adjustments): Adjustments
+    protected static function collect(array $adjustments): Adjustments
     {
         $default = self::defaultAmount();
         return new Adjustments($adjustments, $default->getCurrency(), $default->getContext());
