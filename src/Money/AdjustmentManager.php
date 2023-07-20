@@ -14,13 +14,18 @@ use UnitEnum;
 use Vaened\PriceEngine\Adjusters\Adjusters;
 use Vaened\PriceEngine\Adjusters\Adjustment;
 use Vaened\PriceEngine\Adjusters\Adjustments;
+use Vaened\PriceEngine\Adjusters\MoneyAdjuster;
+
 use function Lambdish\Phunctional\each;
 
 final class AdjustmentManager
 {
     private const IDENTICAL = 0;
+
     protected Adjustments $adjustments;
+
     private BigDecimal    $lasAmount;
+
     private Money         $subtotal;
 
     public function __construct(
@@ -41,7 +46,7 @@ final class AdjustmentManager
 
     public function add(array $adjusters): void
     {
-        each(fn(Adjuster $adjuster) => $this->adjusters->create($adjuster), $adjusters);
+        each(fn(MoneyAdjuster $adjuster) => $this->adjusters->create($adjuster), $adjusters);
         $this->forceRecalculation();
     }
 
@@ -99,7 +104,7 @@ final class AdjustmentManager
 
     protected function createAdjustment(Money $money): callable
     {
-        return static fn(Adjuster $adjuster) => new Adjustment(
+        return static fn(MoneyAdjuster $adjuster) => new Adjustment(
             $adjuster->adjust($money), $adjuster->type(), $adjuster->value(), $adjuster->code()
         );
     }
