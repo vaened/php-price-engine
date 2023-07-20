@@ -10,7 +10,10 @@ namespace Vaened\PriceEngine\Tests\Utils;
 enum TaxCode
 {
     case Imaginary;
+
     case IGV;
+
     case IVA;
+
     case ISC;
 }

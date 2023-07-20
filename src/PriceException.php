@@ -9,5 +9,4 @@ namespace Vaened\PriceEngine;
 
 abstract class PriceException extends \RuntimeException
 {
-
 }

@@ -10,5 +10,6 @@ namespace Vaened\PriceEngine\Tests\Utils;
 enum DiscountCode
 {
     case NewUsers;
+
     case Promotional;
 }

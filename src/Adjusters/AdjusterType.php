@@ -10,5 +10,6 @@ namespace Vaened\PriceEngine\Adjusters;
 enum AdjusterType
 {
     case Percentage;
+
     case Uniform;
 }

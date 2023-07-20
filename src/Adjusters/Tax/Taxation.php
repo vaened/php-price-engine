@@ -29,7 +29,6 @@ abstract class Taxation implements AdjusterScheme
 
     abstract public function isInclusive(): bool;
 
-
     public function code(): string
     {
         return $this->code;

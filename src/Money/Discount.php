@@ -9,5 +9,4 @@ namespace Vaened\PriceEngine\Money;
 
 final class Discount extends Adjuster
 {
-
 }

@@ -57,9 +57,9 @@ final class Summary implements TotalSummary
         $this->quantity = $quantity;
         $this->subtotal = $subtotal;
         return $this->andTotalTaxesAre($totalTaxes)
-            ->andTotalChargesAre($totalCharges)
-            ->andTotalDiscountsAre($totalDiscounts)
-            ->andDefinitiveTotalAre($total);
+                    ->andTotalChargesAre($totalCharges)
+                    ->andTotalDiscountsAre($totalDiscounts)
+                    ->andDefinitiveTotalAre($total);
     }
 
     public function andTotalTaxesAre(Money $money): self

@@ -10,11 +10,13 @@ namespace Vaened\PriceEngine;
 use BackedEnum;
 use Brick\Math\RoundingMode;
 use UnitEnum;
+
 use function is_string;
 
 final class Helper
 {
     private static Calculator $calculator;
+
     private static int        $roundingMode = RoundingMode::HALF_UP;
 
     public static function setCalculator(Calculator $calculator): void
@@ -41,8 +43,8 @@ final class Helper
     {
         return match (true) {
             null === $code || is_string($code) => $code,
-            $code instanceof BackedEnum        => $code->value,
-            $code instanceof UnitEnum          => $code->name,
+            $code instanceof BackedEnum => $code->value,
+            $code instanceof UnitEnum => $code->name,
         };
     }
 }

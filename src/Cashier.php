@@ -17,10 +17,15 @@ use Vaened\PriceEngine\Money\{AdjustmentManager, Amount, Charge, Discount, Price
 abstract class Cashier implements TotalSummary
 {
     private readonly Money             $unitPrice;
+
     private readonly TaxCodes          $applicableCodes;
+
     private Price                      $price;
+
     private readonly AdjustmentManager $discounts;
+
     private readonly AdjustmentManager $charges;
+
     private readonly AdjustmentManager $taxes;
 
     public function __construct(
@@ -34,8 +39,9 @@ abstract class Cashier implements TotalSummary
         $this->applicableCodes = $amount->applicableCodes();
         $allTaxes              = $taxes->additionally($amount->taxes())->onlyAdjustablesOf($this->applicableCodes);
         $applicableTaxes       = $allTaxes->toAdjusters();
-        $this->unitPrice       = $allTaxes->clean($amount->value());
-        $this->price           = $this->createUnitPrice($this->unitPrice, $applicableTaxes, $discounts, $charges);
+
+        $this->unitPrice = $allTaxes->clean($amount->value());
+        $this->price     = $this->createUnitPrice($this->unitPrice, $applicableTaxes, $discounts, $charges);
         $this->createAdjustmentManagers($discounts, $charges, $applicableTaxes, $this->price, $this->quantity);
     }
 

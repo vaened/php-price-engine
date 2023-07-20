@@ -10,6 +10,7 @@ namespace Vaened\PriceEngine\Adjusters\Tax;
 use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\Helper;
+
 use function count;
 use function Lambdish\Phunctional\map;
 use function Lambdish\Phunctional\some;
@@ -17,6 +18,7 @@ use function Lambdish\Phunctional\some;
 final class TaxCodes
 {
     public const ANY = ['*'];
+
     private readonly array $codes;
 
     public function __construct(iterable $codes)
@@ -46,8 +48,11 @@ final class TaxCodes
 
     public function isValid(BackedEnum|UnitEnum|string $code): bool
     {
-        return $this->isAnyAllowed() ||
-            some(static fn(string $item) => $item === Helper::processEnumerableCode($code), $this->codes);
+        return $this->isAnyAllowed()
+            || some(
+                static fn(string $item) => $item === Helper::processEnumerableCode($code),
+                $this->codes
+            );
     }
 
     public function isNothingAllowed(): bool

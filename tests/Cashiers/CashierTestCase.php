@@ -13,6 +13,7 @@ use Vaened\PriceEngine\Adjusters\Adjustments;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Tests\TestCase;
 use Vaened\PriceEngine\TotalSummary;
+
 use function Lambdish\Phunctional\each;
 use function sprintf;
 
@@ -75,7 +76,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertUnitPrice(Money $unitPrice): void
     {
-        $this->assertEquals($this->cashier->unitPrice(), $unitPrice,
+        $this->assertEquals($this->cashier->unitPrice(),
+            $unitPrice,
             sprintf(
                 'Failed asserting that the unit price of <%s> equals <%s>.',
                 $unitPrice->getAmount(),
@@ -86,7 +88,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertSubtotal(Money $subtotal): void
     {
-        $this->assertEquals($this->cashier->subtotal(), $subtotal,
+        $this->assertEquals($this->cashier->subtotal(),
+            $subtotal,
             sprintf(
                 'Failed asserting that the subtotal of <%s> equals <%s>.',
                 $subtotal->getAmount(),
@@ -96,7 +99,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotalTaxes(Money $totalTaxes): void
     {
-        $this->assertEquals($this->cashier->totalTaxes(), $totalTaxes,
+        $this->assertEquals($this->cashier->totalTaxes(),
+            $totalTaxes,
             sprintf(
                 'Failed asserting that the total taxes of <%s> equals <%s>.',
                 $totalTaxes->getAmount(),
@@ -106,7 +110,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotalCharges(Money $totalCharges): void
     {
-        $this->assertEquals($this->cashier->totalCharges(), $totalCharges,
+        $this->assertEquals($this->cashier->totalCharges(),
+            $totalCharges,
             sprintf(
                 'Failed asserting that the total charges of <%s> equals <%s>.',
                 $totalCharges->getAmount(),
@@ -116,7 +121,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotaDiscounts(Money $totaDiscounts): void
     {
-        $this->assertEquals($this->cashier->totalDiscounts(), $totaDiscounts,
+        $this->assertEquals($this->cashier->totalDiscounts(),
+            $totaDiscounts,
             sprintf(
                 'Failed asserting that the tota discounts of <%s> equals <%s>.',
                 $totaDiscounts->getAmount(),
@@ -126,7 +132,8 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotal(Money $total): void
     {
-        $this->assertEquals($this->cashier->total(), $total,
+        $this->assertEquals($this->cashier->total(),
+            $total,
             sprintf(
                 'Failed asserting that the definitive total of <%s> equals <%s>.',
                 $total->getAmount(),

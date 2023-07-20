@@ -13,9 +13,11 @@ use Brick\Money\Money;
 
 final class RegularPrice implements Price
 {
-    private readonly Money $grossPrice;
+    private readonly Money    $grossPrice;
+
     private readonly Currency $currency;
-    private readonly Context $context;
+
+    private readonly Context  $context;
 
     public function __construct(Money $unitPrice)
     {

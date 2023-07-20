@@ -18,6 +18,7 @@ use Traversable;
 use UnitEnum;
 use Vaened\PriceEngine\Helper;
 use Vaened\Support\Types\InvalidType;
+
 use function count;
 use function Lambdish\Phunctional\any;
 use function Lambdish\Phunctional\reduce;
@@ -25,6 +26,7 @@ use function Lambdish\Phunctional\reduce;
 final class Adjustments implements Countable, IteratorAggregate
 {
     private readonly Money $total;
+
     private array          $items;
 
     public function __construct(array $items, Currency $moneyCurrency, Context $moneyContext)
@@ -80,7 +82,8 @@ final class Adjustments implements Countable, IteratorAggregate
         $this->total = reduce(
             static fn(?Money $acc, Adjustment $adjustment) => null === $acc
                 ? $adjustment->amount()
-                : $acc->plus($adjustment->amount()), $this->items,
+                : $acc->plus($adjustment->amount()),
+            $this->items,
             $initial
         );
     }

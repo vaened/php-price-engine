@@ -10,5 +10,6 @@ namespace Vaened\PriceEngine\Tests\Utils;
 enum ChargeCode
 {
     case POS;
+
     case Delivery;
 }
