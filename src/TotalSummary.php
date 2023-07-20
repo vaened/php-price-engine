@@ -20,6 +20,8 @@ interface TotalSummary
 
     public function subtotal(): Money;
 
+    public function tax(BackedEnum|UnitEnum|string $taxCode): ?Adjustment;
+
     public function totalTaxes(): Money;
 
     public function charge(BackedEnum|UnitEnum|string $chargeCode): ?Adjustment;
