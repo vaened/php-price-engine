@@ -7,10 +7,8 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine;
 
-use BackedEnum;
 use Brick\Money\Money;
-use UnitEnum;
-use Vaened\PriceEngine\Adjusters\Adjustment;
+use Vaened\PriceEngine\Adjusters\Adjustments;
 
 interface TotalSummary
 {
@@ -20,17 +18,11 @@ interface TotalSummary
 
     public function subtotal(): Money;
 
-    public function tax(BackedEnum|UnitEnum|string $taxCode): ?Adjustment;
+    public function taxes(): Adjustments;
 
-    public function totalTaxes(): Money;
+    public function charges(): Adjustments;
 
-    public function charge(BackedEnum|UnitEnum|string $chargeCode): ?Adjustment;
-
-    public function totalCharges(): Money;
-
-    public function discount(BackedEnum|UnitEnum|string $discountCode): ?Adjustment;
-
-    public function totalDiscounts(): Money;
+    public function discounts(): Adjustments;
 
     public function total(): Money;
 }

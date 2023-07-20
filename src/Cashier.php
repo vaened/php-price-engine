@@ -10,15 +10,13 @@ namespace Vaened\PriceEngine;
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
-use Vaened\PriceEngine\Adjusters\{Adjusters, Adjustment, Adjustments};
-use Vaened\PriceEngine\Adjusters\Tax\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjusters\{Adjusters, Adjustments};
+use Vaened\PriceEngine\Adjusters\Tax\{Taxes};
 use Vaened\PriceEngine\Money\{AdjustmentManager, Amount, Charge, Discount, Prices\Price};
 
 abstract class Cashier implements TotalSummary
 {
     private readonly Money             $unitPrice;
-
-    private readonly TaxCodes          $applicableCodes;
 
     private Price                      $price;
 
@@ -36,9 +34,9 @@ abstract class Cashier implements TotalSummary
         Adjusters   $discounts = new Adjusters([]),
     )
     {
-        $this->applicableCodes = $amount->applicableCodes();
-        $allTaxes              = $taxes->additionally($amount->taxes())->onlyAdjustablesOf($this->applicableCodes);
-        $applicableTaxes       = $allTaxes->toAdjusters();
+        $allTaxes        = $taxes->additionally($amount->taxes())
+                                 ->onlyAdjustablesOf($amount->applicableCodes());
+        $applicableTaxes = $allTaxes->toAdjusters();
 
         $this->unitPrice = $allTaxes->clean($amount->value());
         $this->price     = $this->createUnitPrice($this->unitPrice, $applicableTaxes, $discounts, $charges);
@@ -72,11 +70,6 @@ abstract class Cashier implements TotalSummary
         $this->syncPrices();
     }
 
-    public function discount(BackedEnum|UnitEnum|string $discountCode): ?Adjustment
-    {
-        return $this->discounts->locate($discountCode);
-    }
-
     public function discounts(): Adjustments
     {
         return $this->discounts->adjustments();
@@ -94,19 +87,9 @@ abstract class Cashier implements TotalSummary
         $this->syncPrices();
     }
 
-    public function charge(BackedEnum|UnitEnum|string $chargeCode): ?Adjustment
-    {
-        return $this->charges->locate($chargeCode);
-    }
-
     public function charges(): Adjustments
     {
         return $this->charges->adjustments();
-    }
-
-    public function tax(BackedEnum|UnitEnum|string $taxCode): ?Adjustment
-    {
-        return $this->taxes->locate($taxCode);
     }
 
     public function taxes(): Adjustments
@@ -129,31 +112,12 @@ abstract class Cashier implements TotalSummary
         return $this->unitPrice()->multipliedBy($this->quantity());
     }
 
-    public function totalTaxes(): Money
-    {
-        if ($this->applicableCodes->isNothingAllowed()) {
-            return Money::zero($this->price->currency(), $this->price->context());
-        }
-
-        return $this->taxes->total();
-    }
-
-    public function totalCharges(): Money
-    {
-        return $this->charges->total();
-    }
-
-    public function totalDiscounts(): Money
-    {
-        return $this->discounts->total();
-    }
-
     public function total(): Money
     {
         return $this->subtotal()
-                    ->plus($this->totalTaxes())
-                    ->plus($this->totalCharges())
-                    ->minus($this->totalDiscounts());
+                    ->plus($this->taxes()->total())
+                    ->plus($this->charges()->total())
+                    ->minus($this->discounts()->total());
     }
 
     protected function syncPrices(): void
