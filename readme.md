@@ -69,9 +69,9 @@ $cashier->add(
 To obtain individual values of any price adjuster, you can use the `tax()` `charge()`, or `discount()` functions, all of which receive the code established during creation and return an instance of [`Adjustment`](./src/Adjusters/Adjustment.php)
 
 ```php
-$cashier->tax('IVA');
-$cashier->charge('DELIVERY');
-$cashier->discount('NEW_USERS');
+$cashier->taxes()->locate('IVA');
+$cashier->charges()->locate('DELIVERY');
+$cashier->discounts()->locate('NEW_USERS');
 ```
 
 ### Obtaining Totals
@@ -82,9 +82,9 @@ To obtain the total, you can use individual functions, each of which returns an 
 $cashier->quantity();
 $cashier->unitPrice();
 $cashier->subtotal();
-$cashier->totalTaxes();
-$cashier->totalCharges();
-$cashier->totalDiscounts();
+$cashier->taxes()->total();
+$cashier->charges()->total();
+$cashier->discounts()->total();
 $cashier->total();
 ```
 
