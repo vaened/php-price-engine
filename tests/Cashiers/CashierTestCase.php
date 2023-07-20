@@ -13,7 +13,6 @@ use Vaened\PriceEngine\Adjusters\Adjustments;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Tests\TestCase;
 use Vaened\PriceEngine\Tests\Utils\Summary;
-use Vaened\PriceEngine\TotalSummary;
 
 use function Lambdish\Phunctional\each;
 use function sprintf;
@@ -100,35 +99,43 @@ abstract class CashierTestCase extends TestCase
 
     private function assertTotalTaxes(Money $totalTaxes): void
     {
-        $this->assertEquals($this->cashier->totalTaxes(),
+        $total = $this->cashier->taxes()->total();
+
+        $this->assertEquals(
+            $total,
             $totalTaxes,
             sprintf(
                 'Failed asserting that the total taxes of <%s> equals <%s>.',
                 $totalTaxes->getAmount(),
-                $this->cashier->totalTaxes()->getAmount()
+                $total
             ));
     }
 
     private function assertTotalCharges(Money $totalCharges): void
     {
-        $this->assertEquals($this->cashier->totalCharges(),
+        $total = $this->cashier->charges()->total();
+
+        $this->assertEquals(
+            $total,
             $totalCharges,
             sprintf(
                 'Failed asserting that the total charges of <%s> equals <%s>.',
                 $totalCharges->getAmount(),
-                $this->cashier->totalCharges()->getAmount()
+                $total->getAmount()
             ));
     }
 
     private function assertTotaDiscounts(Money $totaDiscounts): void
     {
-        $this->assertEquals($this->cashier->totalDiscounts(),
+        $total = $this->cashier->discounts()->total();
+
+        $this->assertEquals(
+            $total,
             $totaDiscounts,
             sprintf(
                 'Failed asserting that the tota discounts of <%s> equals <%s>.',
                 $totaDiscounts->getAmount(),
-                $this->cashier->totalDiscounts()->getAmount()
-            ));
+                $total->getAmount()));
     }
 
     private function assertTotal(Money $total): void
