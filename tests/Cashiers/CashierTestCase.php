@@ -12,6 +12,7 @@ use Vaened\PriceEngine\Adjusters\Adjustment;
 use Vaened\PriceEngine\Adjusters\Adjustments;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Tests\TestCase;
+use Vaened\PriceEngine\Tests\Utils\Summary;
 use Vaened\PriceEngine\TotalSummary;
 
 use function Lambdish\Phunctional\each;
@@ -47,7 +48,7 @@ abstract class CashierTestCase extends TestCase
         );
     }
 
-    protected function assertTotals(TotalSummary $summary): void
+    protected function assertTotals(Summary $summary): void
     {
         $this->assertQuantity($summary->quantity());
         $this->assertUnitPrice($summary->unitPrice());

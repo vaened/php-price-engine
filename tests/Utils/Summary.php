@@ -8,9 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Tests\Utils;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\TotalSummary;
 
-final class Summary implements TotalSummary
+final class Summary
 {
     public function __construct(
         private int            $quantity,
