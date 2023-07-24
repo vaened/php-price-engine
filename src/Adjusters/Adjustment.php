@@ -9,7 +9,7 @@ namespace Vaened\PriceEngine\Adjusters;
 
 use Brick\Money\Money;
 
-final class Adjustment
+final class Adjustment implements AdjusterScheme
 {
     public function __construct(
         private readonly Money        $amount,
