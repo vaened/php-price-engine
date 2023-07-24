@@ -111,9 +111,9 @@ There are 2 ways to create the amount.
 - **Amounts without applicable taxes**: These amounts are not subject to any tax and will not have taxes applied.
 
   ```php
-      Amount::taxexempt(
-          Money::of(10, 'PEN')
-      );
+  Amount::taxexempt(
+      Money::of(10, 'PEN')
+  );
   ```
   > These would be the same as creating a taxable amount but passing **TaxCodes**::***none()*** as the allowed codes.
 
