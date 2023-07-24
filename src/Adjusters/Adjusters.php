@@ -21,6 +21,11 @@ class Adjusters extends ArrayObject
         parent::__construct($items);
     }
 
+    public static function empty(): self
+    {
+        return new self([]);
+    }
+
     public static function from(array $items): self
     {
         return new self($items);
