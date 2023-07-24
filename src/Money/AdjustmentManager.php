@@ -46,7 +46,7 @@ final class AdjustmentManager
 
     public function add(array $adjusters): void
     {
-        each(fn(MoneyAdjuster $adjuster) => $this->adjusters->create($adjuster), $adjusters);
+        each(fn(MoneyAdjuster $adjuster) => $this->adjusters->push($adjuster), $adjusters);
         $this->forceRecalculation();
     }
 

@@ -39,7 +39,7 @@ class Adjusters extends ArrayObject
         );
     }
 
-    public function create(MoneyAdjuster $adjuster): void
+    public function push(MoneyAdjuster $adjuster): void
     {
         $this->items[] = $adjuster;
     }
