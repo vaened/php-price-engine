@@ -1,6 +1,6 @@
 # Price Engine
 
-![Build Status](https://github.com/vaened/php-price-engine/actions/workflows/tests.yml/badge.svg)
+[![Build Status](https://github.com/vaened/php-price-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/vaened/php-price-engine/actions?query=workflow:Tests)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](license)
 
 The Price Calculation Library is a tool that allows you to perform complex calculations for prices, taxes, discounts, and charges in your applications. This library is based on the `Brick\Money` library to ensure precise monetary calculations.
