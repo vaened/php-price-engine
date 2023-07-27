@@ -7,9 +7,9 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjusters;
 
-enum AdjusterType
+enum AdjusterType: string
 {
-    case Percentage;
+    case Percentage = 'PCT';
 
-    case Uniform;
+    case Uniform = 'FIX';
 }
