@@ -17,7 +17,7 @@ composer require vaened/php-price-engine
 
 ### Initializing the Cashier
 
-To start using the Price Engine, create an instance of the [`StandardCashier`](./src/Calculators/StandardCashier.php) class and provide [`Amount`](./src/Money/Amount.php).
+To start using the Price Engine, create an instance of the [`StandardCashier`](./src/Cashiers/StandardCashier.php) class and provide [`Amount`](./src/Money/Amount.php).
 
 ```php
 $cashier = new StandardCashier(
@@ -43,7 +43,7 @@ $cashier->update(10);
 ### Applying Discounts
 
 To apply discounts, use the `apply()` method, that will calculate the totals in the next summary, and receive as parameter N amount
-of [`Discount`](./src/Money/Discount.php).
+of [`Discount`](./src/Adjustments/Discount.php).
 
 ```php
 $cashier->apply(
@@ -55,7 +55,7 @@ $cashier->apply(
 ### Adding Charges
 
 To add charges, use the `add()` method, it will calculate the totals in the next summary, and received as parameter N amount
-of [`Charge`](./src/Money/Charge.php).
+of [`Charge`](./src/Adjustments/Charge.php).
 
 ```php
 $cashier->add(
@@ -66,7 +66,7 @@ $cashier->add(
 
 ### Obtaining Individual Totals
 
-To obtain individual values of any price adjuster, you can use the `tax()` `charge()`, or `discount()` functions, all of which receive the code established during creation and return an instance of [`Adjustment`](./src/Adjusters/Adjustment.php)
+To obtain individual values of any price adjuster, you can use the `tax()` `charge()`, or `discount()` functions, all of which receive the code established during creation and return an instance of [`Adjustment`](./src/Adjustment.php)
 
 ```php
 $cashier->taxes()->locate('IVA');
@@ -90,7 +90,7 @@ $cashier->total();
 
 ## Configuration
 
-The [`StandardCashier`](./src/Calculators/StandardCashier.php) operates based on the concept of a `gross unit price`. This means that the price provided to [`Amount`](./src/Money/Amount.php) is cleared of all included taxes before starting any calculations.
+The [`StandardCashier`](./src/Cashiers/StandardCashier.php) operates based on the concept of a `gross unit price`. This means that the price provided to [`Amount`](./src/Money/Amount.php) is cleared of all included taxes before starting any calculations.
 
 ### Amounts
 There are 2 ways to create the amount.
@@ -122,7 +122,7 @@ Taxes can be established in two ways.
 
 - **Inclusive**: Taxes included in the unit price, and will be cleared during calculations
   ```php
-  use Vaened\PriceEngine\Adjusters\Tax;
+  use Vaened\PriceEngine\Adjustments\Tax;
   
   $amount->impose([
     Tax\Inclusive::proporcional(18, 'IGV'); // 18%
@@ -139,7 +139,7 @@ Taxes can be established in two ways.
   ```
 - **Exclusive**: Taxes not included in the unit price, and will be added for the final calculations.
   ```php
-  use Vaened\PriceEngine\Adjusters\Tax;
+  use Vaened\PriceEngine\Adjustments\Tax;
 
   $amount->impose([
     Tax\Exclusive::proporcional(18, 'IGV'); // 18%

@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjusters;
+namespace Vaened\PriceEngine;
 
 use ArrayIterator;
 use BackedEnum;
@@ -16,7 +16,6 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 use UnitEnum;
-use Vaened\PriceEngine\Helper;
 use Vaened\Support\Types\InvalidType;
 
 use function count;

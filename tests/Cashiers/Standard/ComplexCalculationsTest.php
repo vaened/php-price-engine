@@ -7,15 +7,15 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
 
-use Vaened\PriceEngine\Adjusters\AdjusterMode;
-use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Adjusters\Tax\{TaxCodes, Taxes};
-use Vaened\PriceEngine\Adjusters\Tax;
-use Vaened\PriceEngine\Calculators\StandardCashier;
+use Vaened\PriceEngine\Adjustments\AdjusterMode;
+use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Charge;
+use Vaened\PriceEngine\Adjustments\Discount;
+use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Cashiers\StandardCashier;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
-use Vaened\PriceEngine\Money\Charge;
-use Vaened\PriceEngine\Money\Discount;
 use Vaened\PriceEngine\Tests\Utils\ChargeCode;
 use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;

@@ -5,14 +5,11 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money;
+namespace Vaened\PriceEngine\Adjustments;
 
 use BackedEnum;
 use ReflectionClass;
 use UnitEnum;
-use Vaened\PriceEngine\Adjusters\AdjusterMode;
-use Vaened\PriceEngine\Adjusters\AdjusterScheme;
-use Vaened\PriceEngine\Adjusters\AdjusterType;
 use Vaened\PriceEngine\Config;
 use Vaened\PriceEngine\Helper;
 

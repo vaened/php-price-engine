@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\Adjustments;
 
 interface TotalSummary
 {

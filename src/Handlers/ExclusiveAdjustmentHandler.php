@@ -5,12 +5,12 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Calculators;
+namespace Vaened\PriceEngine\Handlers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\AdjusterMode;
-use Vaened\PriceEngine\Adjusters\AdjusterScheme;
-use Vaened\PriceEngine\Adjusters\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjusterMode;
+use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\AdjusterType;
 use Vaened\PriceEngine\Config;
 use Vaened\PriceEngine\Helper;
 

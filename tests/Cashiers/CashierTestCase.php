@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Tests\Cashiers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\Adjustment;
-use Vaened\PriceEngine\Adjusters\Adjustments;
+use Vaened\PriceEngine\Adjustment;
+use Vaened\PriceEngine\Adjustments;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Tests\TestCase;
 use Vaened\PriceEngine\Tests\Utils\Summary;

@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money;
+namespace Vaened\PriceEngine\Adjustments;
 
 final class Charge extends Adjuster
 {

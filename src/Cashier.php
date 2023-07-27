@@ -10,9 +10,9 @@ namespace Vaened\PriceEngine;
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
-use Vaened\PriceEngine\Adjusters\{Adjusters, Adjustments};
-use Vaened\PriceEngine\Adjusters\Tax\{Taxes};
-use Vaened\PriceEngine\Money\{AdjustmentManager, Amount, Charge, Discount, Prices\Price};
+use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount};
+use Vaened\PriceEngine\Adjustments\Tax\{Taxes};
+use Vaened\PriceEngine\Money\{Amount, Prices\Price};
 
 abstract class Cashier implements TotalSummary
 {

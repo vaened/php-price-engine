@@ -5,11 +5,11 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjusters\Tax;
+namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Calculators\InclusiveAdjustmentHandler;
+use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Handlers\InclusiveAdjustmentHandler;
 use Vaened\Support\Types\ArrayObject;
 
 use function in_array;

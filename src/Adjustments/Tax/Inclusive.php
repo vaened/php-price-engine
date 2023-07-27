@@ -5,12 +5,12 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjusters\Tax;
+namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use BackedEnum;
 use UnitEnum;
-use Vaened\PriceEngine\Adjusters\AdjusterMode;
-use Vaened\PriceEngine\Adjusters\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjusterMode;
+use Vaened\PriceEngine\Adjustments\AdjusterType;
 
 final class Inclusive extends Taxation
 {

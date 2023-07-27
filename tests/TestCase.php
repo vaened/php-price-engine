@@ -10,9 +10,9 @@ namespace Vaened\PriceEngine\Tests;
 use Brick\Money\Context\CustomContext;
 use Brick\Money\Money;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use Vaened\PriceEngine\Adjusters\AdjusterScheme;
-use Vaened\PriceEngine\Adjusters\Adjustment;
-use Vaened\PriceEngine\Adjusters\Adjustments;
+use Vaened\PriceEngine\Adjustment;
+use Vaened\PriceEngine\Adjustments;
+use Vaened\PriceEngine\Adjustments\AdjusterScheme;
 
 abstract class TestCase extends PhpUnitTestCase
 {

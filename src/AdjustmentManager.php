@@ -5,16 +5,14 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money;
+namespace Vaened\PriceEngine;
 
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
-use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Adjusters\AdjusterScheme;
-use Vaened\PriceEngine\Adjusters\Adjustment;
-use Vaened\PriceEngine\Adjusters\Adjustments;
-use Vaened\PriceEngine\Calculators\ExclusiveAdjustmentHandler;
+use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Handlers\ExclusiveAdjustmentHandler;
 use Vaened\PriceEngine\Money\Concerns\Cacheable;
 
 use function Lambdish\Phunctional\each;

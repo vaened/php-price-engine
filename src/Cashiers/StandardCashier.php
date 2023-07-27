@@ -5,10 +5,10 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Calculators;
+namespace Vaened\PriceEngine\Cashiers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Prices\Price;
 use Vaened\PriceEngine\Money\Prices\RegularPrice;

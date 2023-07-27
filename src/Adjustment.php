@@ -5,9 +5,12 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjusters;
+namespace Vaened\PriceEngine;
 
 use Brick\Money\Money;
+use Vaened\PriceEngine\Adjustments\AdjusterMode;
+use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\AdjusterType;
 
 final class Adjustment implements AdjusterScheme
 {

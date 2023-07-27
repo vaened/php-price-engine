@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Money;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjusters\Tax\TaxCodes;
-use Vaened\PriceEngine\Adjusters\Tax\Taxes;
+use Vaened\PriceEngine\Adjustments\Tax\TaxCodes;
+use Vaened\PriceEngine\Adjustments\Tax\Taxes;
 
 use function count;
 

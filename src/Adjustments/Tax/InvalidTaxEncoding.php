@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjusters\Tax;
+namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use Throwable;
 use Vaened\PriceEngine\PriceException;
