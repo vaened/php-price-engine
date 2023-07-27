@@ -15,19 +15,7 @@ use function is_string;
 
 final class Helper
 {
-    private static Calculator $calculator;
-
-    private static int        $roundingMode = RoundingMode::HALF_UP;
-
-    public static function setCalculator(Calculator $calculator): void
-    {
-        self::$calculator = $calculator;
-    }
-
-    public static function calculator(): Calculator
-    {
-        return self::$calculator ??= new Calculator();
-    }
+    private static int $roundingMode = RoundingMode::HALF_EVEN;
 
     public static function setDefaultRoundingMode(int $roundingMode): void
     {
@@ -46,5 +34,10 @@ final class Helper
             $code instanceof BackedEnum => $code->value,
             $code instanceof UnitEnum => $code->name,
         };
+    }
+
+    public static function percentageize(int $percentage): float
+    {
+        return $percentage / 100;
     }
 }

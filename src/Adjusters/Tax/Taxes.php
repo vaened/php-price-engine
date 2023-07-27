@@ -9,7 +9,7 @@ namespace Vaened\PriceEngine\Adjusters\Tax;
 
 use Brick\Money\Money;
 use Vaened\PriceEngine\Adjusters\Adjusters;
-use Vaened\PriceEngine\Helper;
+use Vaened\PriceEngine\Calculators\InclusiveAdjustmentHandler;
 use Vaened\Support\Types\ArrayObject;
 
 use function in_array;
@@ -70,7 +70,7 @@ final class Taxes extends ArrayObject
     {
         return static fn(
             Money $money, Taxation $taxation
-        ) => Helper::calculator()->byInclusive($money, $taxation->type(), $taxation->value());
+        ) => InclusiveAdjustmentHandler::apply($money, $taxation);
     }
 
     private function toCharge(): callable

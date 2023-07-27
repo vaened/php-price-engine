@@ -8,25 +8,24 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Money;
 
 use BackedEnum;
-use Brick\Money\Money;
 use ReflectionClass;
 use UnitEnum;
 use Vaened\PriceEngine\Adjusters\AdjusterMode;
+use Vaened\PriceEngine\Adjusters\AdjusterScheme;
 use Vaened\PriceEngine\Adjusters\AdjusterType;
-use Vaened\PriceEngine\Adjusters\MoneyAdjuster;
 use Vaened\PriceEngine\Helper;
 
 use function sprintf;
 use function uniqid;
 
-class Adjuster implements MoneyAdjuster
+class Adjuster implements AdjusterScheme
 {
     private ?string $code;
 
     public function __construct(
         private readonly AdjusterType   $type,
         private readonly int|float      $value,
-        private readonly AdjusterMode   $mode = AdjusterMode::ForTotal,
+        private readonly AdjusterMode   $mode,
         BackedEnum|UnitEnum|string|null $code = null,
     )
     {
@@ -35,17 +34,12 @@ class Adjuster implements MoneyAdjuster
 
     public static function proporcional(int $percentage): static
     {
-        return new static(AdjusterType::Percentage, $percentage, AdjusterMode::ForTotal);
+        return new static(AdjusterType::Percentage, $percentage, AdjusterMode::PerUnit);
     }
 
     public static function fixed(float $amount, AdjusterMode $mode = AdjusterMode::ForTotal): static
     {
         return new static(AdjusterType::Uniform, $amount, $mode);
-    }
-
-    public function adjust(Money $money): Money
-    {
-        return Helper::calculator()->byExclusive($money, $this->type(), $this->value());
     }
 
     public function named(BackedEnum|UnitEnum|string $code): static

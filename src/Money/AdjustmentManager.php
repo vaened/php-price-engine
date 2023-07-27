@@ -11,9 +11,10 @@ use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjusters\Adjusters;
+use Vaened\PriceEngine\Adjusters\AdjusterScheme;
 use Vaened\PriceEngine\Adjusters\Adjustment;
 use Vaened\PriceEngine\Adjusters\Adjustments;
-use Vaened\PriceEngine\Adjusters\MoneyAdjuster;
+use Vaened\PriceEngine\Calculators\ExclusiveAdjustmentHandler;
 use Vaened\PriceEngine\Money\Concerns\Cacheable;
 
 use function Lambdish\Phunctional\each;
@@ -41,7 +42,7 @@ final class AdjustmentManager
 
     public function add(array $adjusters): void
     {
-        each(fn(MoneyAdjuster $adjuster) => $this->adjusters->push($adjuster), $adjusters);
+        each(fn(AdjusterScheme $adjuster) => $this->adjusters->push($adjuster), $adjusters);
         $this->forceRecalculation();
     }
 
@@ -85,16 +86,16 @@ final class AdjustmentManager
     protected function breakdownAdjustment(): void
     {
         $this->adjustments = new Adjustments(
-            $this->adjusters->map($this->createAdjustment($this->unitPrice)),
+            $this->adjusters->map($this->createAdjustment()),
             $this->unitPrice->getCurrency(),
             $this->unitPrice->getContext(),
         );
     }
 
-    protected function createAdjustment(Money $money): callable
+    protected function createAdjustment(): callable
     {
-        return fn(MoneyAdjuster $adjuster) => new Adjustment(
-            $adjuster->adjust($money)->multipliedBy($this->quantity),
+        return fn(AdjusterScheme $adjuster) => new Adjustment(
+            ExclusiveAdjustmentHandler::apply($this->unitPrice, $this->quantity, $adjuster),
             $adjuster->type(),
             $adjuster->mode(),
             $adjuster->value(),

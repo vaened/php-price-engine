@@ -34,18 +34,18 @@ class Adjusters extends ArrayObject
     public function remove(BackedEnum|UnitEnum|string $code): void
     {
         $this->items = filter(
-            static fn(MoneyAdjuster $adjuster) => $adjuster->code() !== Helper::processEnumerableCode($code),
+            static fn(AdjusterScheme $adjuster) => $adjuster->code() !== Helper::processEnumerableCode($code),
             $this->items
         );
     }
 
-    public function push(MoneyAdjuster $adjuster): void
+    public function push(AdjusterScheme $adjuster): void
     {
         $this->items[] = $adjuster;
     }
 
     protected function type(): string
     {
-        return MoneyAdjuster::class;
+        return AdjusterScheme::class;
     }
 }
