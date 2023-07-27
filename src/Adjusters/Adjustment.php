@@ -14,6 +14,7 @@ final class Adjustment implements AdjusterScheme
     public function __construct(
         private readonly Money        $amount,
         private readonly AdjusterType $type,
+        private readonly AdjusterMode $mode,
         private readonly int|float    $value,
         private readonly string       $code
     )
@@ -38,5 +39,10 @@ final class Adjustment implements AdjusterScheme
     public function value(): float|int
     {
         return $this->value;
+    }
+
+    public function mode(): AdjusterMode
+    {
+        return $this->mode;
     }
 }

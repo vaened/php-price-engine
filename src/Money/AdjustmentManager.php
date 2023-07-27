@@ -96,6 +96,7 @@ final class AdjustmentManager
         return fn(MoneyAdjuster $adjuster) => new Adjustment(
             $adjuster->adjust($money)->multipliedBy($this->quantity),
             $adjuster->type(),
+            $adjuster->mode(),
             $adjuster->value(),
             $adjuster->code()
         );

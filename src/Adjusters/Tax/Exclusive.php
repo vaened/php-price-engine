@@ -9,18 +9,19 @@ namespace Vaened\PriceEngine\Adjusters\Tax;
 
 use BackedEnum;
 use UnitEnum;
+use Vaened\PriceEngine\Adjusters\AdjusterMode;
 use Vaened\PriceEngine\Adjusters\AdjusterType;
 
 final class Exclusive extends Taxation
 {
     public static function proporcional(int $percentage, BackedEnum|UnitEnum|string $code): self
     {
-        return new self(AdjusterType::Percentage, $percentage, $code);
+        return new self(AdjusterType::Percentage, $percentage, AdjusterMode::PerUnit, $code);
     }
 
-    public static function fixed(float $amount, BackedEnum|UnitEnum|string $code): self
+    public static function fixed(float $amount, BackedEnum|UnitEnum|string $code, AdjusterMode $mode = AdjusterMode::PerUnit): self
     {
-        return new self(AdjusterType::Uniform, $amount, $code);
+        return new self(AdjusterType::Uniform, $amount, $mode, $code);
     }
 
     public function isInclusive(): bool

@@ -11,6 +11,7 @@ use BackedEnum;
 use Brick\Money\Money;
 use ReflectionClass;
 use UnitEnum;
+use Vaened\PriceEngine\Adjusters\AdjusterMode;
 use Vaened\PriceEngine\Adjusters\AdjusterType;
 use Vaened\PriceEngine\Adjusters\MoneyAdjuster;
 use Vaened\PriceEngine\Helper;
@@ -25,7 +26,8 @@ class Adjuster implements MoneyAdjuster
     public function __construct(
         private readonly AdjusterType   $type,
         private readonly int|float      $value,
-        BackedEnum|UnitEnum|string|null $code = null
+        private readonly AdjusterMode   $mode = AdjusterMode::ForTotal,
+        BackedEnum|UnitEnum|string|null $code = null,
     )
     {
         $this->code = Helper::processEnumerableCode($code);
@@ -33,12 +35,12 @@ class Adjuster implements MoneyAdjuster
 
     public static function proporcional(int $percentage): static
     {
-        return new static(AdjusterType::Percentage, $percentage);
+        return new static(AdjusterType::Percentage, $percentage, AdjusterMode::ForTotal);
     }
 
-    public static function fixed(float $amount): static
+    public static function fixed(float $amount, AdjusterMode $mode = AdjusterMode::ForTotal): static
     {
-        return new static(AdjusterType::Uniform, $amount);
+        return new static(AdjusterType::Uniform, $amount, $mode);
     }
 
     public function adjust(Money $money): Money
@@ -60,6 +62,11 @@ class Adjuster implements MoneyAdjuster
     public function type(): AdjusterType
     {
         return $this->type;
+    }
+
+    public function mode(): AdjusterMode
+    {
+        return $this->mode;
     }
 
     public function value(): float|int

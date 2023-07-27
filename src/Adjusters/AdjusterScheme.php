@@ -13,5 +13,7 @@ interface AdjusterScheme
 
     public function type(): AdjusterType;
 
+    public function mode(): AdjusterMode;
+
     public function value(): float|int;
 }
