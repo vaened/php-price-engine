@@ -26,19 +26,19 @@ final class UpdateQuantityTest extends StandardCashierTestCase
                 quantity     : 3,
                 unitPrice    : self::money(82.6446),
                 subtotal     : self::money(247.9338),
-                totalTaxes   : self::money(52.0661),
-                totalCharges : self::money(22.3967),
+                totalTaxes   : self::money(52.0662),
+                totalCharges : self::money(22.3966),
                 totaDiscounts: self::money(9.9587),
                 total        : self::money(312.4379),
             )
         );
 
         $this->assertTaxes(
-            self::createAdjustment(52.0661, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
+            self::createAdjustment(52.0662, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(
-            self::createAdjustment(12.3967, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(12.3966, Charge::proporcional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 

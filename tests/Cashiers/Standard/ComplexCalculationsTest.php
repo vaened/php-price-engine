@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
 
+use Vaened\PriceEngine\Adjusters\AdjusterMode;
 use Vaened\PriceEngine\Adjusters\Adjusters;
 use Vaened\PriceEngine\Adjusters\Tax\{TaxCodes, Taxes};
 use Vaened\PriceEngine\Adjusters\Tax;
@@ -28,46 +29,43 @@ final class ComplexCalculationsTest extends StandardCashierTestCase
         $this->assertTotals($summary);
 
         $this->cashier->update(3);
-
         $this->assertTotals(
             $summary->changeTo(
                 quantity      : 3,
                 subtotal      : self::money(85.1694),
-                totalTaxes    : self::money(17.8305),
+                totalTaxes    : self::money(22.8306),
                 totalCharges  : self::money(0),
                 totalDiscounts: self::money(1.7034),
-                total         : self::money(101.2965),
+                total         : self::money(106.2966),
             )
         );
 
         $this->cashier->add(Charge::proporcional(4)->named(ChargeCode::Delivery));
-
         $this->assertTotals(
             $summary
                 ->andTotalChargesAre(self::money(3.4068))
-                ->andDefinitiveTotalAre(self::money(104.7033))
+                ->andDefinitiveTotalAre(self::money(109.7034))
         );
 
-        $this->cashier->apply(Discount::proporcional(3)->named(DiscountCode::Promotional));
+        $this->cashier->apply(Discount::fixed(6, AdjusterMode::PerUnit)->named(DiscountCode::Promotional));
         $this->assertTotals(
             $summary
-                ->andTotalDiscountsAre(self::money(4.2585))
-                ->andDefinitiveTotalAre(self::money(102.1482))
+                ->andTotalDiscountsAre(self::money(19.7034))
+                ->andDefinitiveTotalAre(self::money(91.7034))
         );
 
         $this->cashier->cancelDiscount(DiscountCode::NewUsers);
         $this->assertTotals(
             $summary
-                ->andTotalDiscountsAre(self::money(2.5551))
-                ->andDefinitiveTotalAre(self::money(103.8516))
+                ->andTotalDiscountsAre(self::money(18.0))
+                ->andDefinitiveTotalAre(self::money(93.4068))
         );
 
         $this->cashier->revertCharge(ChargeCode::Delivery);
-
         $this->assertTotals(
             $summary
                 ->andTotalChargesAre(self::money(0))
-                ->andDefinitiveTotalAre(self::money(100.4448))
+                ->andDefinitiveTotalAre(self::money(90.0000))
         );
 
         $this->cashier->update(9);
@@ -75,10 +73,10 @@ final class ComplexCalculationsTest extends StandardCashierTestCase
             $summary->changeTo(
                 quantity      : 9,
                 subtotal      : self::money(255.5082),
-                totalTaxes    : self::money(48.4915),
+                totalTaxes    : self::money(68.4918),
                 totalCharges  : self::money(0),
-                totalDiscounts: self::money(7.6652),
-                total         : self::money(296.3345),
+                totalDiscounts: self::money(54.0),
+                total         : self::money(270.0000),
             )
         );
     }
@@ -108,10 +106,10 @@ final class ComplexCalculationsTest extends StandardCashierTestCase
             quantity     : 7,
             unitPrice    : self::money(28.3898),
             subtotal     : self::money(198.7286),
-            totalTaxes   : self::money(38.2711),
+            totalTaxes   : self::money(53.2714),
             totalCharges : self::money(0),
             totaDiscounts: self::money(3.9746),
-            total        : self::money(233.0251),
+            total        : self::money(248.0254),
         );
     }
 }

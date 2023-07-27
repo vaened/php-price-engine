@@ -15,6 +15,7 @@ use Vaened\PriceEngine\Tests\TestCase;
 use Vaened\PriceEngine\Tests\Utils\Summary;
 
 use function call_user_func;
+use function dd;
 use function explode;
 use function Lambdish\Phunctional\each;
 use function Lambdish\Phunctional\reduce;
@@ -29,24 +30,44 @@ abstract class CashierTestCase extends TestCase
     public function assertDiscounts(Adjustment ...$expected): void
     {
         each(
-            $this->assertAdjustmentEquals(self::collect($expected)),
-            $this->cashier->discounts()
+            $this->assertAdjustmentEquals($this->cashier->discounts()),
+            self::collect($expected),
         );
     }
 
     public function assertCharges(Adjustment ...$expected): void
     {
         each(
-            $this->assertAdjustmentEquals(self::collect($expected)),
-            $this->cashier->charges()
+            $this->assertAdjustmentEquals($this->cashier->charges()),
+            self::collect($expected)
         );
     }
 
     public function assertTaxes(Adjustment ...$expected): void
     {
         each(
-            $this->assertAdjustmentEquals(self::collect($expected)),
-            $this->cashier->taxes()
+            $this->assertAdjustmentEquals($this->cashier->taxes()),
+            self::collect($expected),
+        );
+    }
+
+    protected function printTotals(): never
+    {
+        dd(
+            reduce(function (array $acc, Money $total, string $label) {
+                $acc[$label] = $total->getAmount();
+                return $acc;
+            },
+                [
+                    'unitPrice'      => $this->cashier->unitPrice(),
+                    'subtotal'       => $this->cashier->subtotal(),
+                    'totalTaxes'     => $this->cashier->taxes()->total(),
+                    'totalCharges'   => $this->cashier->charges()->total(),
+                    'totalDiscounts' => $this->cashier->discounts()->total(),
+                    'total'          => $this->cashier->total(),
+                ],
+                []),
+
         );
     }
 
@@ -87,9 +108,21 @@ abstract class CashierTestCase extends TestCase
         );
     }
 
-    private function assertAdjustmentEquals(Adjustments $expected): callable
+    private function assertAdjustmentEquals(Adjustments $adjustments): callable
     {
-        return static fn(Adjustment $adjustment) => self::assertEquals($expected->locate($adjustment->code()), $adjustment);
+        return static function (Adjustment $expected) use ($adjustments) {
+            $adjustment = $adjustments->locate($expected->code());
+
+            self::assertNotNull(
+                $adjustment,
+                sprintf(
+                    'Failed asserting that adjuster <%s> is in the cart.',
+                    $expected->code()
+                )
+            );
+
+            self::assertEquals($adjustment, $expected);
+        };
     }
 
     private function assertQuantity(int $quantity): void

@@ -31,7 +31,7 @@ abstract class TestCase extends PhpUnitTestCase
 
     protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Adjustment
     {
-        return new Adjustment(self::money($amount), $scheme->type(), $scheme->value(), $scheme->code());
+        return new Adjustment(self::money($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
     }
 
     protected static function money(float $amount): Money
