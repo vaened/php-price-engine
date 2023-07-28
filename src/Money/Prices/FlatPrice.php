@@ -11,34 +11,35 @@ use Brick\Money\Context;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 
-final class RegularPrice implements Price
+final class FlatPrice implements Price
 {
-    private readonly Money    $grossPrice;
-
     private readonly Currency $currency;
 
     private readonly Context  $context;
 
-    public function __construct(Money $unitPrice)
+    public function __construct(
+        private readonly Money $discountable,
+        private readonly Money $chargeable,
+        private readonly Money $taxable,
+    )
     {
-        $this->currency   = $unitPrice->getCurrency();
-        $this->context    = $unitPrice->getContext();
-        $this->grossPrice = $unitPrice;
+        $this->currency = $taxable->getCurrency();
+        $this->context  = $taxable->getContext();
     }
 
     public function discountable(): Money
     {
-        return $this->grossPrice;
-    }
-
-    public function taxable(): Money
-    {
-        return $this->grossPrice;
+        return $this->discountable;
     }
 
     public function chargeable(): Money
     {
-        return $this->grossPrice;
+        return $this->chargeable;
+    }
+
+    public function taxable(): Money
+    {
+        return $this->taxable;
     }
 
     public function currency(): Currency

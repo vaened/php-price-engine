@@ -25,7 +25,7 @@ final class AdjustmentManager
 
     public function __construct(
         private readonly Adjusters $adjusters,
-        private Money              $unitPrice,
+        private readonly Money     $unitPrice,
         private int                $quantity,
     )
     {
@@ -58,12 +58,6 @@ final class AdjustmentManager
     public function update(int $quantity): void
     {
         $this->quantity = $quantity;
-        $this->forceRecalculation();
-    }
-
-    public function revalue(Money $unitPrice): void
-    {
-        $this->unitPrice = $unitPrice;
         $this->forceRecalculation();
     }
 

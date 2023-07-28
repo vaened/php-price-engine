@@ -11,17 +11,12 @@ use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Prices\Price;
-use Vaened\PriceEngine\Money\Prices\RegularPrice;
+use Vaened\PriceEngine\Money\Prices\FlatPrice;
 
 final class StandardCashier extends Cashier
 {
-    protected function createUnitPrice(
-        Money     $unitPrice,
-        Adjusters $taxes,
-        Adjusters $discounts,
-        Adjusters $charges
-    ): Price
+    protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price
     {
-        return new RegularPrice($unitPrice);
+        return new FlatPrice($grossUnitPrice, $grossUnitPrice, $grossUnitPrice);
     }
 }

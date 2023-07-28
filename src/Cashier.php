@@ -16,15 +16,15 @@ use Vaened\PriceEngine\Money\{Amount, Prices\Price};
 
 abstract class Cashier implements TotalSummary
 {
-    private readonly Money             $unitPrice;
+    protected AdjustmentManager $discounts;
 
-    private Price                      $price;
+    protected AdjustmentManager $charges;
 
-    private readonly AdjustmentManager $discounts;
+    private AdjustmentManager   $taxes;
 
-    private readonly AdjustmentManager $charges;
+    private readonly Money      $grossUnitPrice;
 
-    private readonly AdjustmentManager $taxes;
+    private Price               $price;
 
     public function __construct(
         Amount      $amount,
@@ -34,21 +34,16 @@ abstract class Cashier implements TotalSummary
         Adjusters   $discounts = new Adjusters([]),
     )
     {
-        $allTaxes        = $taxes->additionally($amount->taxes())
-                                 ->onlyAdjustablesOf($amount->applicableCodes());
-        $applicableTaxes = $allTaxes->toAdjusters();
+        $allTaxes             = $taxes->additionally($amount->taxes())
+                                      ->onlyAdjustablesOf($amount->applicableCodes());
+        $applicableTaxes      = $allTaxes->toAdjusters();
+        $this->grossUnitPrice = $allTaxes->clean($amount->value());
+        $this->price          = $this->createUnitPrice($this->grossUnitPrice, $applicableTaxes);
 
-        $this->unitPrice = $allTaxes->clean($amount->value());
-        $this->price     = $this->createUnitPrice($this->unitPrice, $applicableTaxes, $discounts, $charges);
-        $this->createAdjustmentManagers($discounts, $charges, $applicableTaxes, $this->price, $this->quantity);
+        $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
     }
 
-    abstract protected function createUnitPrice(
-        Money     $unitPrice,
-        Adjusters $taxes,
-        Adjusters $discounts,
-        Adjusters $charges
-    ): Price;
+    abstract protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price;
 
     public function update(int $quantity): void
     {
@@ -61,13 +56,11 @@ abstract class Cashier implements TotalSummary
     public function apply(Discount ...$discounts): void
     {
         $this->discounts->add($discounts);
-        $this->syncPrices();
     }
 
     public function cancelDiscount(BackedEnum|UnitEnum|string $discountCode): void
     {
         $this->discounts->remove($discountCode);
-        $this->syncPrices();
     }
 
     public function discounts(): Adjustments
@@ -78,13 +71,11 @@ abstract class Cashier implements TotalSummary
     public function add(Charge ...$charges): void
     {
         $this->charges->add($charges);
-        $this->syncPrices();
     }
 
     public function revertCharge(BackedEnum|UnitEnum|string $chargeCode): void
     {
         $this->charges->remove($chargeCode);
-        $this->syncPrices();
     }
 
     public function charges(): Adjustments
@@ -102,9 +93,14 @@ abstract class Cashier implements TotalSummary
         return $this->quantity;
     }
 
+    public function priceBreakdown(): Price
+    {
+        return $this->price;
+    }
+
     public function unitPrice(): Money
     {
-        return $this->unitPrice;
+        return $this->grossUnitPrice;
     }
 
     public function subtotal(): Money
@@ -120,29 +116,10 @@ abstract class Cashier implements TotalSummary
                     ->minus($this->discounts()->total());
     }
 
-    protected function syncPrices(): void
+    protected function initializeMoneyAdjusters(Adjusters $discounts, Adjusters $charges, Adjusters $taxes): void
     {
-        $this->price = $this->createUnitPrice(
-            $this->unitPrice,
-            $this->taxes->adjusters(),
-            $this->discounts->adjusters(),
-            $this->charges->adjusters(),
-        );
-        $this->discounts->revalue($this->price->discountable());
-        $this->charges->revalue($this->price->chargeable());
-        $this->taxes->revalue($this->price->taxable());
-    }
-
-    private function createAdjustmentManagers(
-        Adjusters $discounts,
-        Adjusters $charges,
-        Adjusters $taxes,
-        Price     $price,
-        int       $quantity
-    ): void
-    {
-        $this->discounts = new AdjustmentManager($discounts, $price->discountable(), $quantity);
-        $this->charges   = new AdjustmentManager($charges, $price->chargeable(), $quantity);
-        $this->taxes     = new AdjustmentManager($taxes, $price->taxable(), $quantity);
+        $this->discounts = new AdjustmentManager($discounts, $this->price->discountable(), $this->quantity);
+        $this->charges   = new AdjustmentManager($charges, $this->price->chargeable(), $this->quantity);
+        $this->taxes     = new AdjustmentManager($taxes, $this->price->taxable(), $this->quantity);
     }
 }
