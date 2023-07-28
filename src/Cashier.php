@@ -11,7 +11,7 @@ use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount};
-use Vaened\PriceEngine\Adjustments\Tax\{Taxes};
+use Vaened\PriceEngine\Adjustments\Tax\{PriceGrosser, Taxes};
 use Vaened\PriceEngine\Money\{Amount, Prices\Price};
 
 abstract class Cashier implements TotalSummary
@@ -34,10 +34,10 @@ abstract class Cashier implements TotalSummary
         Adjusters   $discounts = new Adjusters([]),
     )
     {
-        $allTaxes             = $taxes->additionally($amount->taxes())
-                                      ->onlyAdjustablesOf($amount->applicableCodes());
-        $applicableTaxes      = $allTaxes->toAdjusters();
-        $this->grossUnitPrice = $allTaxes->clean($amount->value());
+        $allTaxes        = $taxes->additionally($amount->taxes())
+                                 ->onlyAdjustablesOf($amount->applicableCodes());
+        $applicableTaxes = $allTaxes->toAdjusters();
+        $this->grossUnitPrice = PriceGrosser::for($allTaxes)->clean($amount->value());
         $this->price          = $this->createUnitPrice($this->grossUnitPrice, $applicableTaxes);
 
         $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);

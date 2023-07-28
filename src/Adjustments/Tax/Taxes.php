@@ -7,9 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjustments\Tax;
 
-use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\PriceEngine\Handlers\InclusiveAdjustmentHandler;
 use Vaened\Support\Types\ArrayObject;
 
 use function in_array;
@@ -50,27 +48,9 @@ final class Taxes extends ArrayObject
         };
     }
 
-    public function clean(Money $money): Money
-    {
-        return $this->filter($this->inclusives())
-                    ->reduce($this->breakdown(), $money);
-    }
-
     protected function type(): string
     {
         return Taxation::class;
-    }
-
-    private function inclusives(): callable
-    {
-        return static fn(Taxation $taxation) => $taxation->isInclusive();
-    }
-
-    private function breakdown(): callable
-    {
-        return static fn(
-            Money $money, Taxation $taxation
-        ) => InclusiveAdjustmentHandler::apply($money, $taxation);
     }
 
     private function toCharge(): callable

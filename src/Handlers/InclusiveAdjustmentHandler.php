@@ -28,20 +28,20 @@ use Vaened\PriceEngine\Helper;
  */
 final class InclusiveAdjustmentHandler
 {
-    public static function apply(Money $total, AdjusterScheme $scheme): Money
+    public static function extractFrom(Money $total, AdjusterScheme $scheme): Money
     {
         return match ($scheme->type()) {
-            AdjusterType::Percentage => $total->dividedBy(
-                1 + Helper::percentageize($scheme->value()),
-                Config::defaultRoundingMode()
+            AdjusterType::Percentage => $total->minus(
+                $total->dividedBy(
+                    1 + Helper::percentageize($scheme->value()),
+                    Config::defaultRoundingMode()
+                )
             ),
 
-            AdjusterType::Uniform => $total->minus(
-                Money::of(
-                    $scheme->value(),
-                    $total->getCurrency(),
-                    $total->getContext()
-                )
+            AdjusterType::Uniform => Money::of(
+                $scheme->value(),
+                $total->getCurrency(),
+                $total->getContext()
             )
         };
     }
