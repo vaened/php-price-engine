@@ -17,10 +17,10 @@ composer require vaened/php-price-engine
 
 ### Initializing the Cashier
 
-To start using the Price Engine, create an instance of the [`StandardCashier`](./src/Cashiers/StandardCashier.php) class and provide [`Amount`](./src/Money/Amount.php).
+To start using the Price Engine, create an instance of the any [Cashier](#cashiers) and provide an [`Amount`](./src/Money/Amount.php).
 
 ```php
-$cashier = new StandardCashier(
+$cashier = new SimpleCashier(
     Amount::taxable(
         Money::of(100, 'USD'),
         TaxCodes::any()
@@ -89,8 +89,16 @@ $cashier->total();
 ```
 
 ## Configuration
+Currently there are 2 built-in ways to handle calculations
 
-The [`StandardCashier`](./src/Cashiers/StandardCashier.php) operates based on the concept of a `gross unit price`. This means that the price provided to [`Amount`](./src/Money/Amount.php) is cleared of all included taxes before starting any calculations.
+### Cashiers
+- [**SimpleCashier**](./src/Cashiers/SimpleCashier.php): This `cashier` operates based on the gross price concept. It means that the price provided will be cleaned to get the final price without tax. Adjustments are applied directly to the gross price and taxes are calculated separately after adjustments are applied
+
+- [**RegularCashier**](./src/Cashiers/RegularCashier.php):  This `cashier` operates based on the concept of unit price + taxes. It means that the configured taxes will be maintained or added to the indicated price, and discounts and charges will be applied to this price with taxes included.
+
+
+> Choose the `cashier` that best suits your specific business needs and requirements. You can create your own cashier to fit any specific logic or rule related to your business. If you need to create additional cashiers or implement custom logic, you can do so by extending [`Cashier`](./src/Cashier.php). This library provides a flexible foundation to handle various pricing scenarios effectively.
+
 
 ### Amounts
 There are 2 ways to create the amount.
@@ -129,7 +137,7 @@ Taxes can be established in two ways.
     Tax\Inclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
-  $cashier = new StandardCashier(
+  $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
       Tax\Inclusive::proporcional(18, 'IGV'); // 18%
@@ -146,7 +154,7 @@ Taxes can be established in two ways.
     Tax\Exclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
-  $cashier = new StandardCashier(
+  $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
       Tax\Exclusive::proporcional(18, 'IGV'); // 18%
