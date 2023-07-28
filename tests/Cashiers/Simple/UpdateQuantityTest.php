@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
+namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
@@ -15,7 +15,7 @@ use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;
 use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
-final class UpdateQuantityTest extends StandardCashierTestCase
+final class UpdateQuantityTest extends SimpleCashierTestCase
 {
     public function test_change_quantity_recalculates_all_totals(): void
     {

@@ -13,7 +13,7 @@ use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Prices\Price;
 use Vaened\PriceEngine\Money\Prices\FlatPrice;
 
-final class StandardCashier extends Cashier
+final class SimpleCashier extends Cashier
 {
     protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price
     {

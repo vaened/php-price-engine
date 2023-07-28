@@ -5,8 +5,9 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
+namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 
+use Vaened\PriceEngine\Adjustments\AdjusterMode;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\PriceEngine\Adjustments\Tax;
@@ -15,19 +16,24 @@ use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;
 use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
-final class InitialCalculationsTest extends StandardCashierTestCase
+final class AddChargesTest extends SimpleCashierTestCase
 {
-    public function test_initial_calculations_are_correct(): void
+    public function test_add_charges_recalculate_all_totals(): void
     {
+        $this->cashier->add(
+            $testing12Discount = Charge::proporcional(12)->named('TESTING-12%'),
+            $testing20Discount = Charge::fixed(20, AdjusterMode::PerUnit)->named('TESTING-20'),
+        );
+
         $this->assertTotals(
             Summary::is(
                 quantity     : 10,
                 unitPrice    : self::money(82.6446),
                 subtotal     : self::money(826.4460),
                 totalTaxes   : self::money(173.5540),
-                totalCharges : self::money(51.3220),
+                totalCharges : self::money(350.4960),
                 totaDiscounts: self::money(21.5290),
-                total        : self::money(1029.7930),
+                total        : self::money(1328.9670),
             )
         );
 
@@ -38,6 +44,8 @@ final class InitialCalculationsTest extends StandardCashierTestCase
         $this->assertCharges(
             self::createAdjustment(41.3220, Charge::proporcional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
+            self::createAdjustment(99.1740, $testing12Discount),
+            self::createAdjustment(200.0, $testing20Discount),
         );
 
         $this->assertDiscounts(

@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Tests\Cashiers\Standard;
+namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 
 use Vaened\PriceEngine\Adjustments\AdjusterMode;
 use Vaened\PriceEngine\Adjustments\Adjusters;
@@ -13,7 +13,7 @@ use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
 use Vaened\PriceEngine\Adjustments\Tax;
-use Vaened\PriceEngine\Cashiers\StandardCashier;
+use Vaened\PriceEngine\Cashiers\SimpleCashier;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
 use Vaened\PriceEngine\Tests\Utils\ChargeCode;
@@ -21,7 +21,7 @@ use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;
 use Vaened\PriceEngine\Tests\Utils\TaxCode;
 
-final class ComplexCalculationsTest extends StandardCashierTestCase
+final class ComplexCalculationsTest extends SimpleCashierTestCase
 {
     public function test_calculations_are_accurate_in_stressful_situations(): void
     {
@@ -83,7 +83,7 @@ final class ComplexCalculationsTest extends StandardCashierTestCase
 
     protected function cashier(): Cashier
     {
-        return new StandardCashier(
+        return new SimpleCashier(
             Amount::taxable(
                 self::money(33.5),
                 TaxCodes::only([TaxCode::IGV, TaxCode::ISC])
