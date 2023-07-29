@@ -17,7 +17,7 @@ composer require vaened/php-price-engine
 
 ### Initializing the Cashier
 
-To start using the Price Engine, create an instance of the any [Cashier](#cashiers) and provide an [`Amount`](./src/Money/Amount.php).
+To start using the Price Engine, create an instance of the any [Cashier](#configuration) and provide an [`Amount`](./src/Money/Amount.php).
 
 ```php
 $cashier = new SimpleCashier(
