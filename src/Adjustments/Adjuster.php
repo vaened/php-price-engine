@@ -10,7 +10,7 @@ namespace Vaened\PriceEngine\Adjustments;
 use BackedEnum;
 use ReflectionClass;
 use UnitEnum;
-use Vaened\PriceEngine\Config;
+use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\PriceEngine\Helper;
 
 use function sprintf;
@@ -68,6 +68,6 @@ class Adjuster implements AdjusterScheme
 
     protected function roundingMode(): int
     {
-        return Config::defaultRoundingMode();
+        return PriceEngineConfig::defaultRoundingMode();
     }
 }

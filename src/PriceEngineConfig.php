@@ -9,7 +9,7 @@ namespace Vaened\PriceEngine;
 
 use Brick\Math\RoundingMode;
 
-final class Config
+final class PriceEngineConfig
 {
     private static int $roundingMode = RoundingMode::HALF_EVEN;
 

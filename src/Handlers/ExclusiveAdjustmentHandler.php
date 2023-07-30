@@ -11,7 +11,7 @@ use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\AdjusterMode;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
 use Vaened\PriceEngine\Adjustments\AdjusterType;
-use Vaened\PriceEngine\Config;
+use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\PriceEngine\Helper;
 
 /**
@@ -51,7 +51,7 @@ final class ExclusiveAdjustmentHandler
     {
         return $money->multipliedBy(
             Helper::percentageize($scheme->value()),
-            Config::defaultRoundingMode()
+            PriceEngineConfig::defaultRoundingMode()
         );
     }
 }

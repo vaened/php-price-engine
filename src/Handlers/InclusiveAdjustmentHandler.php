@@ -10,7 +10,7 @@ namespace Vaened\PriceEngine\Handlers;
 use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
 use Vaened\PriceEngine\Adjustments\AdjusterType;
-use Vaened\PriceEngine\Config;
+use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\PriceEngine\Helper;
 
 /**
@@ -34,7 +34,7 @@ final class InclusiveAdjustmentHandler
             AdjusterType::Percentage => $total->minus(
                 $total->dividedBy(
                     1 + Helper::percentageize($scheme->value()),
-                    Config::defaultRoundingMode()
+                    PriceEngineConfig::defaultRoundingMode()
                 )
             ),
 
