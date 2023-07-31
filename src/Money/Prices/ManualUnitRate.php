@@ -9,7 +9,7 @@ namespace Vaened\PriceEngine\Money\Prices;
 
 use Brick\Money\Money;
 
-final class FlatPrice implements Price
+final class ManualUnitRate implements UnitRate
 {
     public function __construct(
         private readonly Money $discountable,

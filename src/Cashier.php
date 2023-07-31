@@ -12,7 +12,7 @@ use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount};
 use Vaened\PriceEngine\Adjustments\Tax\{PriceGrosser, Taxes};
-use Vaened\PriceEngine\Money\{Amount, Prices\Price};
+use Vaened\PriceEngine\Money\{Amount, Prices\UnitRate};
 
 abstract class Cashier implements TotalSummary
 {
@@ -24,7 +24,7 @@ abstract class Cashier implements TotalSummary
 
     private readonly Money      $grossUnitPrice;
 
-    private Price               $price;
+    private UnitRate $price;
 
     public function __construct(
         Amount      $amount,
@@ -38,12 +38,12 @@ abstract class Cashier implements TotalSummary
                                  ->onlyAdjustablesOf($amount->applicableCodes());
         $applicableTaxes = $allTaxes->toAdjusters();
         $this->grossUnitPrice = PriceGrosser::for($allTaxes)->clean($amount->value());
-        $this->price          = $this->createUnitPrice($this->grossUnitPrice, $applicableTaxes);
+        $this->price          = $this->createUnitRate($this->grossUnitPrice, $applicableTaxes);
 
         $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
     }
 
-    abstract protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price;
+    abstract protected function createUnitRate(Money $grossUnitPrice, Adjusters $taxes): UnitRate;
 
     public function update(int $quantity): void
     {
@@ -93,7 +93,7 @@ abstract class Cashier implements TotalSummary
         return $this->quantity;
     }
 
-    public function priceBreakdown(): Price
+    public function priceBreakdown(): UnitRate
     {
         return $this->price;
     }

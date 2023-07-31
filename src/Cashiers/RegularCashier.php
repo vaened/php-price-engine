@@ -11,7 +11,7 @@ use Brick\Money\Money;
 use Vaened\PriceEngine\AdjustmentManager;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
-use Vaened\PriceEngine\Money\Prices\{FlatPrice, Price};
+use Vaened\PriceEngine\Money\Prices\{ManualUnitRate, UnitRate};
 
 /**
  * The RegularCashier class represents a cashier that calculates prices based on the price with tax included.
@@ -23,12 +23,12 @@ final class RegularCashier extends Cashier
 {
     private const ONE = 1;
 
-    protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price
+    protected function createUnitRate(Money $grossUnitPrice, Adjusters $taxes): UnitRate
     {
         $unitPriceIncludingTaxes = $grossUnitPrice->plus(
             (new AdjustmentManager($taxes, $grossUnitPrice, self::ONE))->total()
         );
 
-        return new FlatPrice($unitPriceIncludingTaxes, $unitPriceIncludingTaxes, $grossUnitPrice);
+        return new ManualUnitRate($unitPriceIncludingTaxes, $unitPriceIncludingTaxes, $grossUnitPrice);
     }
 }

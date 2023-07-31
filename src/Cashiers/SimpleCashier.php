@@ -10,8 +10,8 @@ namespace Vaened\PriceEngine\Cashiers;
 use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
-use Vaened\PriceEngine\Money\Prices\FlatPrice;
-use Vaened\PriceEngine\Money\Prices\Price;
+use Vaened\PriceEngine\Money\Prices\ManualUnitRate;
+use Vaened\PriceEngine\Money\Prices\UnitRate;
 
 /**
  * The SimpleCashier class represents a cashier that calculates prices based on the gross price without taxes.
@@ -21,8 +21,8 @@ use Vaened\PriceEngine\Money\Prices\Price;
  */
 final class SimpleCashier extends Cashier
 {
-    protected function createUnitPrice(Money $grossUnitPrice, Adjusters $taxes): Price
+    protected function createUnitRate(Money $grossUnitPrice, Adjusters $taxes): UnitRate
     {
-        return new FlatPrice($grossUnitPrice, $grossUnitPrice, $grossUnitPrice);
+        return new ManualUnitRate($grossUnitPrice, $grossUnitPrice, $grossUnitPrice);
     }
 }
