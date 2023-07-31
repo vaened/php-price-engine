@@ -23,6 +23,15 @@ interface UnitRate
     public function discountable(): Money;
 
     /**
+     * Obtain the amount subject to charges.
+     *
+     * This amount is the unit price to which additional charges or fees may be added.
+     *
+     * @return Money The chargeable amount as a Money object.
+     */
+    public function chargeable(): Money;
+
+    /**
      * Obtain the amount subject to taxes.
      *
      * This amount represents the unit amount applicable to taxes, that is, the
@@ -31,13 +40,4 @@ interface UnitRate
      * @return Money The amount taxable as the Money object.
      */
     public function taxable(): Money;
-
-    /**
-     * Obtain the amount subject to charges.
-     *
-     * This amount is the unit price to which additional charges or fees may be added.
-     *
-     * @return Money The chargeable amount as a Money object.
-     */
-    public function chargeable(): Money;
 }
