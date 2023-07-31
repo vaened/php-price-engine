@@ -24,7 +24,7 @@ abstract class Cashier implements TotalSummary
 
     private readonly Money      $grossUnitPrice;
 
-    private UnitRate            $price;
+    private UnitRate            $unitRate;
 
     public function __construct(
         Amount      $amount,
@@ -38,7 +38,7 @@ abstract class Cashier implements TotalSummary
                                       ->onlyAdjustablesOf($amount->applicableCodes());
         $applicableTaxes      = $allTaxes->toAdjusters();
         $this->grossUnitPrice = PriceGrosser::for($allTaxes)->clean($amount->value());
-        $this->price          = $this->createUnitRate($this->grossUnitPrice, $applicableTaxes);
+        $this->unitRate       = $this->createUnitRate($this->grossUnitPrice, $applicableTaxes);
 
         $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
     }
@@ -95,7 +95,7 @@ abstract class Cashier implements TotalSummary
 
     public function priceBreakdown(): UnitRate
     {
-        return $this->price;
+        return $this->unitRate;
     }
 
     public function unitPrice(): Money
@@ -118,8 +118,8 @@ abstract class Cashier implements TotalSummary
 
     protected function initializeMoneyAdjusters(Adjusters $discounts, Adjusters $charges, Adjusters $taxes): void
     {
-        $this->discounts = new AdjustmentManager($discounts, $this->price->discountable(), $this->quantity);
-        $this->charges   = new AdjustmentManager($charges, $this->price->chargeable(), $this->quantity);
-        $this->taxes     = new AdjustmentManager($taxes, $this->price->taxable(), $this->quantity);
+        $this->discounts = new AdjustmentManager($discounts, $this->unitRate->discountable(), $this->quantity);
+        $this->charges   = new AdjustmentManager($charges, $this->unitRate->chargeable(), $this->quantity);
+        $this->taxes     = new AdjustmentManager($taxes, $this->unitRate->taxable(), $this->quantity);
     }
 }
