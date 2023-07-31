@@ -5,9 +5,10 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money\Prices;
+namespace Vaened\PriceEngine\Cashiers\Rates;
 
 use Brick\Money\Money;
+use Vaened\PriceEngine\UnitRate;
 
 final class ManualUnitRate implements UnitRate
 {

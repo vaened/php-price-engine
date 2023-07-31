@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money\Prices;
+namespace Vaened\PriceEngine;
 
 use Brick\Money\Money;
 

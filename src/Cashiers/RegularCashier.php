@@ -8,10 +8,11 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Cashiers;
 
 use Brick\Money\Money;
+use Vaened\PriceEngine\{UnitRate};
 use Vaened\PriceEngine\AdjustmentManager;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
-use Vaened\PriceEngine\Money\Prices\{ManualUnitRate, UnitRate};
+use Vaened\PriceEngine\Cashiers\Rates\ManualUnitRate;
 
 /**
  * The RegularCashier class represents a cashier that calculates prices based on the price with tax included.

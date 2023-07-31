@@ -10,8 +10,8 @@ namespace Vaened\PriceEngine\Cashiers;
 use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
-use Vaened\PriceEngine\Money\Prices\ManualUnitRate;
-use Vaened\PriceEngine\Money\Prices\UnitRate;
+use Vaened\PriceEngine\Cashiers\Rates\ManualUnitRate;
+use Vaened\PriceEngine\UnitRate;
 
 /**
  * The SimpleCashier class represents a cashier that calculates prices based on the gross price without taxes.
