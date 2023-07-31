@@ -13,9 +13,9 @@ interface TotalSummary
 {
     public function quantity(): int;
 
-    public function unitPrice(): Money;
+    public function unitPrice(): Price;
 
-    public function subtotal(): Money;
+    public function subtotal(): Price;
 
     public function taxes(): Adjustments;
 

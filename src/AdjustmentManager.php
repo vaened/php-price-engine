@@ -33,6 +33,11 @@ final class AdjustmentManager
         $this->breakdownAdjustment();
     }
 
+    public static function totalize(Money $price, Adjusters $adjustersToApply): Money
+    {
+        return (new self($adjustersToApply, $price, 1))->total();
+    }
+
     public function total(): Money
     {
         return $this->adjustments()->total();

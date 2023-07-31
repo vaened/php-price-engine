@@ -74,8 +74,8 @@ abstract class CashierTestCase extends TestCase
     protected function assertTotals(Summary $summary): void
     {
         $this->assertQuantity($summary->quantity());
-        $this->assertTotal('unitPrice', $summary->unitPrice());
-        $this->assertTotal('subtotal', $summary->subtotal());
+        $this->assertTotal('unitPrice->gross', $summary->unitPrice());
+        $this->assertTotal('subtotal->gross', $summary->subtotal());
         $this->assertTotal('taxes->total', $summary->totalTaxes());
         $this->assertTotal('charges->total', $summary->totalCharges());
         $this->assertTotal('discounts->total', $summary->totalDiscounts());

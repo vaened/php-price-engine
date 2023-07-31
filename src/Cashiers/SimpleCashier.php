@@ -7,10 +7,9 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Cashiers;
 
-use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Cashiers\Rates\ManualUnitRate;
+use Vaened\PriceEngine\Price;
 use Vaened\PriceEngine\UnitRate;
 
 /**
@@ -21,8 +20,8 @@ use Vaened\PriceEngine\UnitRate;
  */
 final class SimpleCashier extends Cashier
 {
-    protected function createUnitRate(Money $grossUnitPrice, Adjusters $taxes): UnitRate
+    protected function createUnitRate(Price $price): UnitRate
     {
-        return new ManualUnitRate($grossUnitPrice, $grossUnitPrice, $grossUnitPrice);
+        return new ManualUnitRate($price->gross(), $price->gross(), $price->gross());
     }
 }

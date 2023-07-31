@@ -22,7 +22,7 @@ abstract class Cashier implements TotalSummary
 
     private AdjustmentManager   $taxes;
 
-    private readonly Money      $grossUnitPrice;
+    private Price               $price;
 
     private UnitRate            $unitRate;
 
@@ -34,16 +34,18 @@ abstract class Cashier implements TotalSummary
         Adjusters   $discounts = new Adjusters([]),
     )
     {
-        $allTaxes             = $taxes->additionally($amount->taxes())
-                                      ->onlyAdjustablesOf($amount->applicableCodes());
-        $applicableTaxes      = $allTaxes->toAdjusters();
-        $this->grossUnitPrice = PriceGrosser::for($allTaxes)->clean($amount->value());
-        $this->unitRate       = $this->createUnitRate($this->grossUnitPrice, $applicableTaxes);
+        $allTaxes        = $taxes->additionally($amount->taxes())
+                                 ->onlyAdjustablesOf($amount->applicableCodes());
+        $applicableTaxes = $allTaxes->toAdjusters();
 
+        $this->initializePrice(
+            grossUnitPrice: PriceGrosser::for($allTaxes)->clean($amount->value()),
+            taxes         : $applicableTaxes
+        );
         $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
     }
 
-    abstract protected function createUnitRate(Money $grossUnitPrice, Adjusters $taxes): UnitRate;
+    abstract protected function createUnitRate(Price $price): UnitRate;
 
     public function update(int $quantity): void
     {
@@ -98,12 +100,12 @@ abstract class Cashier implements TotalSummary
         return $this->unitRate;
     }
 
-    public function unitPrice(): Money
+    public function unitPrice(): Price
     {
-        return $this->grossUnitPrice;
+        return $this->price;
     }
 
-    public function subtotal(): Money
+    public function subtotal(): Price
     {
         return $this->unitPrice()->multipliedBy($this->quantity());
     }
@@ -111,13 +113,25 @@ abstract class Cashier implements TotalSummary
     public function total(): Money
     {
         return $this->subtotal()
+                    ->gross()
                     ->plus($this->taxes()->total())
                     ->plus($this->charges()->total())
                     ->minus($this->discounts()->total());
     }
 
+    protected function initializePrice(Money $grossUnitPrice, Adjusters $taxes): void
+    {
+        $this->price = new Price(
+            $grossUnitPrice,
+            netUnitPrice: $grossUnitPrice->plus(
+                AdjustmentManager::totalize($grossUnitPrice, $taxes)
+            ),
+        );
+    }
+
     protected function initializeMoneyAdjusters(Adjusters $discounts, Adjusters $charges, Adjusters $taxes): void
     {
+        $this->unitRate  = $this->createUnitRate($this->price);
         $this->discounts = new AdjustmentManager($discounts, $this->unitRate->discountable(), $this->quantity);
         $this->charges   = new AdjustmentManager($charges, $this->unitRate->chargeable(), $this->quantity);
         $this->taxes     = new AdjustmentManager($taxes, $this->unitRate->taxable(), $this->quantity);
