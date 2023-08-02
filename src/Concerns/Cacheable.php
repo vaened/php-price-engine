@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Money\Concerns;
+namespace Vaened\PriceEngine\Concerns;
 
 trait Cacheable
 {

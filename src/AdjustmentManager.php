@@ -12,8 +12,8 @@ use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\Adjusters;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Concerns\Cacheable;
 use Vaened\PriceEngine\Handlers\ExclusiveAdjustmentHandler;
-use Vaened\PriceEngine\Money\Concerns\Cacheable;
 
 use function Lambdish\Phunctional\each;
 use function sprintf;
