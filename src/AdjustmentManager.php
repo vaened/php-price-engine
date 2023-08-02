@@ -27,8 +27,6 @@ final class AdjustmentManager
 
     protected Adjustments $adjustments;
 
-    private string        $lasAmount = '';
-
     public function __construct(
         private readonly Adjusters $adjusters,
         private Money              $unitPrice,
@@ -59,11 +57,6 @@ final class AdjustmentManager
     {
         $this->adjusters->remove($adjusterCode);
         $this->forceRecalculation();
-    }
-
-    public function locate(BackedEnum|UnitEnum|string $adjusterCode): Adjustment
-    {
-        return $this->adjustments()->locate($adjusterCode);
     }
 
     public function update(int $quantity): void
