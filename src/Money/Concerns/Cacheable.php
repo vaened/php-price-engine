@@ -7,26 +7,26 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Money\Concerns;
 
-use function sprintf;
-
 trait Cacheable
 {
-    private string $lasAmount = '';
+    private string $cachedValue = '';
 
-    protected function needsRecalculation(): bool
+    abstract protected function cacheIdentifier(): string;
+
+    protected function requiresUpdate(): bool
     {
-        $current = sprintf('[%s]X[%d]', $this->unitPrice->getAmount()->toBigDecimal()->__toString(), $this->quantity);
+        $identifier = $this->cacheIdentifier();
 
-        if ($this->lasAmount === $current) {
+        if ($this->cachedValue === $identifier) {
             return false;
         }
 
-        $this->lasAmount = $current;
+        $this->cachedValue = $identifier;
         return true;
     }
 
-    protected function forceRecalculation(): void
+    protected function cleanCache(): void
     {
-        $this->lasAmount = '';
+        $this->cachedValue = '';
     }
 }

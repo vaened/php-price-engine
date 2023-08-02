@@ -16,16 +16,22 @@ use Vaened\PriceEngine\Handlers\ExclusiveAdjustmentHandler;
 use Vaened\PriceEngine\Money\Concerns\Cacheable;
 
 use function Lambdish\Phunctional\each;
+use function sprintf;
 
 final class AdjustmentManager
 {
-    use Cacheable;
+    use Cacheable {
+        requiresUpdate as requiresRecalculation;
+        cleanCache as forceRecalculation;
+    }
 
     protected Adjustments $adjustments;
 
+    private string        $lasAmount = '';
+
     public function __construct(
         private readonly Adjusters $adjusters,
-        private readonly Money     $unitPrice,
+        private Money              $unitPrice,
         private int                $quantity,
     )
     {
@@ -66,13 +72,17 @@ final class AdjustmentManager
         $this->forceRecalculation();
     }
 
+    public function revalue(Money $unitPrice): void
+    {
+        $this->unitPrice = $unitPrice;
+        $this->forceRecalculation();
+    }
+
     public function adjustments(): Adjustments
     {
-        if ($this->needsRecalculation()) {
-            $this->breakdownAdjustment();
-        }
-
-        return $this->adjustments;
+        return $this->requiresRecalculation()
+            ? $this->adjustments = $this->breakdownAdjustment()
+            : $this->adjustments;
     }
 
     public function adjusters(): Adjusters
@@ -80,16 +90,21 @@ final class AdjustmentManager
         return $this->adjusters;
     }
 
-    protected function breakdownAdjustment(): void
+    protected function cacheIdentifier(): string
     {
-        $this->adjustments = new Adjustments(
+        return sprintf('[%s]X[%d]', $this->unitPrice->getAmount()->__toString(), $this->quantity);
+    }
+
+    private function breakdownAdjustment(): Adjustments
+    {
+        return new Adjustments(
             $this->adjusters->map($this->createAdjustment()),
             $this->unitPrice->getCurrency(),
             $this->unitPrice->getContext(),
         );
     }
 
-    protected function createAdjustment(): callable
+    private function createAdjustment(): callable
     {
         return fn(AdjusterScheme $adjuster) => new Adjustment(
             ExclusiveAdjustmentHandler::apply($this->unitPrice, $this->quantity, $adjuster),
