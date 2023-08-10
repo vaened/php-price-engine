@@ -8,13 +8,13 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\Support\Types\ArrayObject;
+use Vaened\Support\Types\TypedList;
 
 use function in_array;
 
-final class Taxes extends ArrayObject
+final class Taxes extends TypedList
 {
-    public static function from(array $items): self
+    public static function from(iterable $items): self
     {
         return new self($items);
     }

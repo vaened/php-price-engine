@@ -10,13 +10,13 @@ namespace Vaened\PriceEngine\Adjustments;
 use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\Helper;
-use Vaened\Support\Types\ArrayObject;
+use Vaened\Support\Types\TypedList;
 
 use function Lambdish\Phunctional\filter;
 
-class Adjusters extends ArrayObject
+class Adjusters extends TypedList
 {
-    public function __construct(array $items)
+    public function __construct(iterable $items)
     {
         parent::__construct($items);
     }
@@ -26,7 +26,7 @@ class Adjusters extends ArrayObject
         return new self([]);
     }
 
-    public static function from(array $items): self
+    public static function from(iterable $items): self
     {
         return new self($items);
     }
