@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Vaened\PriceEngine\Adjustment;
 use Vaened\PriceEngine\Adjustments;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\Support\Types\ArrayList;
 
 abstract class TestCase extends PhpUnitTestCase
 {
@@ -26,7 +27,7 @@ abstract class TestCase extends PhpUnitTestCase
     protected static function collect(array $adjustments): Adjustments
     {
         $default = self::defaultAmount();
-        return new Adjustments($adjustments, $default->getCurrency(), $default->getContext());
+        return new Adjustments(new ArrayList($adjustments), $default->getCurrency(), $default->getContext());
     }
 
     protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Adjustment

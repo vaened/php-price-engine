@@ -10,11 +10,11 @@ namespace Vaened\PriceEngine\Adjustments;
 use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\Helper;
-use Vaened\Support\Types\TypedList;
+use Vaened\Support\Types\SecureList;
 
 use function Lambdish\Phunctional\filter;
 
-class Adjusters extends TypedList
+class Adjusters extends SecureList
 {
     public function __construct(iterable $items)
     {
@@ -44,7 +44,7 @@ class Adjusters extends TypedList
         $this->items[] = $adjuster;
     }
 
-    protected function type(): string
+    static protected function type(): string
     {
         return AdjusterScheme::class;
     }

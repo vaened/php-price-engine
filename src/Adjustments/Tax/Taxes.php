@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\Support\Types\TypedList;
+use Vaened\Support\Types\SecureList;
 
 use function in_array;
 
-final class Taxes extends TypedList
+final class Taxes extends SecureList
 {
     public static function from(iterable $items): self
     {
@@ -48,11 +48,6 @@ final class Taxes extends TypedList
         };
     }
 
-    protected function type(): string
-    {
-        return Taxation::class;
-    }
-
     private function toCharge(): callable
     {
         return static fn(Taxation $taxation) => $taxation->toCharge();
@@ -61,5 +56,10 @@ final class Taxes extends TypedList
     private function allowed(array $codes): callable
     {
         return static fn(Taxation $taxation) => in_array($taxation->code(), $codes, true);
+    }
+
+    static protected function type(): string
+    {
+        return Taxation::class;
     }
 }

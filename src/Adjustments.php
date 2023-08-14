@@ -16,10 +16,10 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 use UnitEnum;
+use Vaened\Support\Types\AbstractList;
 use Vaened\Support\Types\InvalidType;
 
 use function count;
-use function Lambdish\Phunctional\any;
 use function Lambdish\Phunctional\reduce;
 
 final class Adjustments implements Countable, IteratorAggregate
@@ -28,7 +28,7 @@ final class Adjustments implements Countable, IteratorAggregate
 
     private array          $items;
 
-    public function __construct(array $items, Currency $moneyCurrency, Context $moneyContext)
+    public function __construct(AbstractList $items, Currency $moneyCurrency, Context $moneyContext)
     {
         $this->ensureType($items);
         $this->indexItems($items);
@@ -60,20 +60,19 @@ final class Adjustments implements Countable, IteratorAggregate
         return count($this->items);
     }
 
-    private function ensureType(iterable $items): void
+    private function ensureType(AbstractList $items): void
     {
-        any(
-            fn(mixed $item) => $item instanceof Adjustment ?: throw new InvalidType(self::class, Adjustment::class, $item::class),
-            $items
+        $items->some(
+            fn(mixed $item) => $item instanceof Adjustment ?: throw new InvalidType(self::class, Adjustment::class, $item::class)
         );
     }
 
-    private function indexItems(array $items): void
+    private function indexItems(AbstractList $items): void
     {
-        $this->items = reduce(static function (array $acc, Adjustment $adjustment) {
+        $this->items = $items->reduce(static function (array $acc, Adjustment $adjustment) {
             $acc[$adjustment->code()] = $adjustment;
             return $acc;
-        }, $items, []);
+        }, initial: []);
     }
 
     private function sumTotals(Money $initial): void
