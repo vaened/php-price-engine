@@ -7,31 +7,22 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine;
 
-use ArrayIterator;
 use BackedEnum;
 use Brick\Money\Context;
 use Brick\Money\Currency;
 use Brick\Money\Money;
-use Countable;
-use IteratorAggregate;
-use Traversable;
 use UnitEnum;
-use Vaened\Support\Types\AbstractList;
-use Vaened\Support\Types\InvalidType;
+use Vaened\Support\Types\SecureList;
 
-use function count;
 use function Lambdish\Phunctional\reduce;
 
-final class Adjustments implements Countable, IteratorAggregate
+final class Adjustments extends SecureList
 {
     private readonly Money $total;
 
-    private array          $items;
-
-    public function __construct(AbstractList $items, Currency $moneyCurrency, Context $moneyContext)
+    public function __construct(iterable $items, Currency $moneyCurrency, Context $moneyContext)
     {
-        $this->ensureType($items);
-        $this->indexItems($items);
+        parent::__construct($items);
         $this->sumTotals(initial: Money::zero($moneyCurrency, $moneyContext));
     }
 
@@ -45,44 +36,26 @@ final class Adjustments implements Countable, IteratorAggregate
         return $this->total;
     }
 
-    public function items(): iterable
+    protected function safelyProcessItems(iterable $items): array
     {
-        return $this->items;
-    }
-
-    public function getIterator(): Traversable
-    {
-        return new ArrayIterator($this->items);
-    }
-
-    public function count(): int
-    {
-        return count($this->items);
-    }
-
-    private function ensureType(AbstractList $items): void
-    {
-        $items->some(
-            fn(mixed $item) => $item instanceof Adjustment ?: throw new InvalidType(self::class, Adjustment::class, $item::class)
-        );
-    }
-
-    private function indexItems(AbstractList $items): void
-    {
-        $this->items = $items->reduce(static function (array $acc, Adjustment $adjustment) {
+        return reduce(static function (array $acc, Adjustment $adjustment) {
             $acc[$adjustment->code()] = $adjustment;
             return $acc;
-        }, initial: []);
+        }, $items, initial: []);
     }
 
     private function sumTotals(Money $initial): void
     {
-        $this->total = reduce(
+        $this->total = $this->reduce(
             static fn(?Money $acc, Adjustment $adjustment) => null === $acc
                 ? $adjustment->amount()
                 : $acc->plus($adjustment->amount()),
-            $this->items,
             $initial
         );
+    }
+
+    static protected function type(): string
+    {
+        return Adjustment::class;
     }
 }
