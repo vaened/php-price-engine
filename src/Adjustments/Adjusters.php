@@ -44,7 +44,7 @@ class Adjusters extends SecureList
         $this->items[] = $adjuster;
     }
 
-    static protected function type(): string
+    public static function type(): string
     {
         return AdjusterScheme::class;
     }

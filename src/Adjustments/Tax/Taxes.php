@@ -58,7 +58,7 @@ final class Taxes extends SecureList
         return static fn(Taxation $taxation) => in_array($taxation->code(), $codes, true);
     }
 
-    static protected function type(): string
+    public static function type(): string
     {
         return Taxation::class;
     }

@@ -3,7 +3,7 @@
   "description": "A powerful pricing calculator for products and services, with comprehensive tax and discount calculations.",
   "require": {
     "php": "^8.1",
-    "vaened/support": "^3.1",
+    "vaened/support": "^4.0",
     "lambdish/phunctional": "^2.1",
     "brick/money": "^0.8.0"
   },

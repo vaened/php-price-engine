@@ -54,7 +54,7 @@ final class Adjustments extends SecureList
         );
     }
 
-    static protected function type(): string
+    public static function type(): string
     {
         return Adjustment::class;
     }
