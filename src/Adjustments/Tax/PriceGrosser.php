@@ -31,7 +31,7 @@ final class PriceGrosser
     {
         return reduce(
             static fn(Money $price, Taxation $taxation) => $price->minus(InclusiveAdjustmentHandler::extractFrom($price, $taxation)),
-            [$this->fixedTaxes(), $this->proporcionalTaxes()],
+            [$this->fixedTaxes(), $this->proportionalTaxes()],
             $unitPrice
         );
     }
@@ -44,11 +44,11 @@ final class PriceGrosser
         );
     }
 
-    private function proporcionalTaxes(): Taxation
+    private function proportionalTaxes(): Taxation
     {
         return Inclusive::proporcional(
             $this->reduceTo(AdjusterType::Percentage, 0),
-            'ProporcionalTaxes'
+            'ProportionalTaxes'
         );
     }
 
