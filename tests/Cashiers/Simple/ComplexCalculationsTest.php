@@ -40,7 +40,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
             )
         );
 
-        $this->cashier->add(Charge::proporcional(4)->named(ChargeCode::Delivery));
+        $this->cashier->add(Charge::proportional(4)->named(ChargeCode::Delivery));
         $this->assertTotals(
             $summary
                 ->andTotalChargesAre(self::money(3.4068))
@@ -95,7 +95,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
                 Tax\Exclusive::fixed(2.5, TaxCode::ISC)
             ]),
             discounts: Adjusters::from([
-                Discount::proporcional(2)->named(DiscountCode::NewUsers),
+                Discount::proportional(2)->named(DiscountCode::NewUsers),
             ])
         );
     }

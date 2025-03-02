@@ -21,7 +21,7 @@ final class AddChargesTest extends SimpleCashierTestCase
     public function test_add_charges_recalculate_all_totals(): void
     {
         $this->cashier->add(
-            $testing12Discount = Charge::proporcional(12)->named('TESTING-12%'),
+            $testing12Discount = Charge::proportional(12)->named('TESTING-12%'),
             $testing20Discount = Charge::fixed(20, AdjusterMode::PerUnit)->named('TESTING-20'),
         );
 
@@ -42,14 +42,14 @@ final class AddChargesTest extends SimpleCashierTestCase
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3220, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(41.3220, Charge::proportional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
             self::createAdjustment(99.1740, $testing12Discount),
             self::createAdjustment(200.0, $testing20Discount),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5290, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(16.5290, Discount::proportional(2)->named(DiscountCode::NewUsers)),
             self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
         );
     }

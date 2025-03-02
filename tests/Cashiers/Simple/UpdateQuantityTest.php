@@ -38,12 +38,12 @@ final class UpdateQuantityTest extends SimpleCashierTestCase
         );
 
         $this->assertCharges(
-            self::createAdjustment(12.3966, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(12.3966, Charge::proportional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(4.9587, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(4.9587, Discount::proportional(2)->named(DiscountCode::NewUsers)),
             self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
         );
     }

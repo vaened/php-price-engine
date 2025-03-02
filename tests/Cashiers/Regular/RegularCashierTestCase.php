@@ -36,11 +36,11 @@ abstract class RegularCashierTestCase extends CashierTestCase
                 Tax\Inclusive::fixed(2, TaxCode::ISC),
             ]),
             charges  : Adjusters::from([
-                Charge::proporcional(5)->named(ChargeCode::POS),
+                Charge::proportional(5)->named(ChargeCode::POS),
                 Charge::fixed(2, AdjusterMode::PerUnit)->named(ChargeCode::Delivery)
             ]),
             discounts: Adjusters::from([
-                Discount::proporcional(2)->named(DiscountCode::NewUsers),
+                Discount::proportional(2)->named(DiscountCode::NewUsers),
             ])
         );
     }

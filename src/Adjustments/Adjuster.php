@@ -30,7 +30,7 @@ class Adjuster implements AdjusterScheme
         $this->code = Helper::processEnumerableCode($code);
     }
 
-    public static function proporcional(int $percentage): static
+    public static function proportional(int $percentage): static
     {
         return new static(AdjusterType::Percentage, $percentage, AdjusterMode::PerUnit);
     }

@@ -14,7 +14,7 @@ use Vaened\PriceEngine\Adjustments\AdjusterType;
 
 final class Exclusive extends Taxation
 {
-    public static function proporcional(int $percentage, BackedEnum|UnitEnum|string $code): self
+    public static function proportional(int $percentage, BackedEnum|UnitEnum|string $code): self
     {
         return new self(AdjusterType::Percentage, $percentage, AdjusterMode::PerUnit, $code);
     }

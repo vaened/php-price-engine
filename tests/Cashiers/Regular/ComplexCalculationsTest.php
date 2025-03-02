@@ -46,7 +46,7 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
                     ->andDefinitiveTotalAre(self::money(216.7200))
         );
 
-        $this->cashier->apply(Discount::proporcional(6));
+        $this->cashier->apply(Discount::proportional(6));
         $this->assertTotals(
             $summary->andTotalDiscountsAre(self::money(45.42))
                     ->andDefinitiveTotalAre(self::money(203.58))
@@ -79,10 +79,10 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
                 Tax\Exclusive::fixed(3, TaxCode::ISC)
             ]),
             charges  : Adjusters::from([
-                Charge::proporcional(5)->named(ChargeCode::Delivery),
+                Charge::proportional(5)->named(ChargeCode::Delivery),
             ]),
             discounts: Adjusters::from([
-                Discount::proporcional(12)->named(DiscountCode::NewUsers),
+                Discount::proportional(12)->named(DiscountCode::NewUsers),
                 Discount::fixed(1, AdjusterMode::PerUnit)->named(DiscountCode::Promotional),
             ])
         );

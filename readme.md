@@ -27,7 +27,7 @@ $cashier = new SimpleCashier(
     ),
     quantity : 1,
     taxes    : Taxes::from([
-        Tax\Inclusive::proporcional(21, TaxCode::IVA),
+        Tax\Inclusive::proportional(21, TaxCode::IVA),
     ])
 );
 ```
@@ -47,7 +47,7 @@ of [`Discount`](./src/Adjustments/Discount.php).
 
 ```php
 $cashier->apply(
-    Discount::proporcional(2)->named('NEW_USERS'),
+    Discount::proportional(2)->named('NEW_USERS'),
     Discount::fixed(5)->named('PROMOTIONAL'),
 );
 ```
@@ -59,7 +59,7 @@ of [`Charge`](./src/Adjustments/Charge.php).
 
 ```php
 $cashier->add(
-    Charge::proporcional(5)->named('POS'),
+    Charge::proportional(5)->named('POS'),
     Charge::fixed(10)->named('DELIVERY')
 );
 ```
@@ -150,14 +150,14 @@ Taxes can be established in two ways.
   use Vaened\PriceEngine\Adjustments\Tax;
 
   $amount->impose([
-    Tax\Exclusive::proporcional(18, 'IGV'); // 18%
+    Tax\Exclusive::proportional(18, 'IGV'); // 18%
     Tax\Exclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
   $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
-      Tax\Exclusive::proporcional(18, 'IGV'); // 18%
+      Tax\Exclusive::proportional(18, 'IGV'); // 18%
       Tax\Exclusive::fixed(2, 'ISC'); // 2 PEN
     ])
   );

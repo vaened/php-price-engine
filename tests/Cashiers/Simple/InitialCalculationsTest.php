@@ -36,12 +36,12 @@ final class InitialCalculationsTest extends SimpleCashierTestCase
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3220, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(41.3220, Charge::proportional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5290, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(16.5290, Discount::proportional(2)->named(DiscountCode::NewUsers)),
             self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
         );
     }

@@ -20,8 +20,8 @@ final class ApplyDiscountsTest extends SimpleCashierTestCase
     public function test_apply_discount_recalculate_all_totals(): void
     {
         $this->cashier->apply(
-            Discount::proporcional(3)->named('TESTING-3%'),
-            Discount::proporcional(7)->named('TESTING-7%'),
+            Discount::proportional(3)->named('TESTING-3%'),
+            Discount::proportional(7)->named('TESTING-7%'),
         );
 
         $this->assertTotals(
@@ -41,15 +41,15 @@ final class ApplyDiscountsTest extends SimpleCashierTestCase
         );
 
         $this->assertCharges(
-            self::createAdjustment(41.3220, Charge::proporcional(5)->named(ChargeCode::POS)),
+            self::createAdjustment(41.3220, Charge::proportional(5)->named(ChargeCode::POS)),
             self::createAdjustment(10.0, Charge::fixed(10)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(
-            self::createAdjustment(16.5290, Discount::proporcional(2)->named(DiscountCode::NewUsers)),
+            self::createAdjustment(16.5290, Discount::proportional(2)->named(DiscountCode::NewUsers)),
             self::createAdjustment(5.0, Discount::fixed(5)->named(DiscountCode::Promotional)),
-            self::createAdjustment(24.7930, Discount::proporcional(3)->named('TESTING-3%')),
-            self::createAdjustment(57.8510, Discount::proporcional(7)->named('TESTING-7%')),
+            self::createAdjustment(24.7930, Discount::proportional(3)->named('TESTING-3%')),
+            self::createAdjustment(57.8510, Discount::proportional(7)->named('TESTING-7%')),
         );
     }
 }
