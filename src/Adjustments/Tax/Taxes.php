@@ -31,14 +31,6 @@ final class Taxes extends SecureList
         );
     }
 
-    public function additionally(self $taxes): self
-    {
-        return self::from([
-            ...$this->items(),
-            ...$taxes->items()
-        ]);
-    }
-
     public function onlyAdjustablesOf(TaxCodes $allowed): self
     {
         return match (true) {

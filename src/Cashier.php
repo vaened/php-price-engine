@@ -14,6 +14,8 @@ use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount};
 use Vaened\PriceEngine\Adjustments\Tax\{PriceGrosser, Taxes};
 use Vaened\PriceEngine\Money\{Amount};
 
+use function dd;
+
 abstract class Cashier implements TotalSummary
 {
     protected AdjustmentManager $discounts;
@@ -34,7 +36,7 @@ abstract class Cashier implements TotalSummary
         Adjusters   $discounts = new Adjusters([]),
     )
     {
-        $allTaxes        = $taxes->additionally($amount->taxes())
+        $allTaxes        = $taxes->merge($amount->taxes())
                                  ->onlyAdjustablesOf($amount->applicableCodes());
         $applicableTaxes = $allTaxes->toAdjusters();
 
