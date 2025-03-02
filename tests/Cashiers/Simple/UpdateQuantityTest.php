@@ -34,7 +34,7 @@ final class UpdateQuantityTest extends SimpleCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(52.0662, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
+            self::createAdjustment(52.0662, Tax\Inclusive::proportional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(

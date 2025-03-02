@@ -38,7 +38,7 @@ final class AddChargesTest extends SimpleCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(173.5540, Tax\Inclusive::proporcional(21, TaxCode::IVA)),
+            self::createAdjustment(173.5540, Tax\Inclusive::proportional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(

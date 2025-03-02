@@ -74,8 +74,8 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
             ),
             quantity : 4,
             taxes    : Taxes::from([
-                Tax\Inclusive::proporcional(21, TaxCode::IVA),
-                Tax\Inclusive::proporcional(18, TaxCode::IGV),
+                Tax\Inclusive::proportional(21, TaxCode::IVA),
+                Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Exclusive::fixed(3, TaxCode::ISC)
             ]),
             charges  : Adjusters::from([

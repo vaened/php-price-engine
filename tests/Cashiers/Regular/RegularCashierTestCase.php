@@ -32,7 +32,7 @@ abstract class RegularCashierTestCase extends CashierTestCase
             ),
             quantity : 6,
             taxes    : Taxes::from([
-                Tax\Inclusive::proporcional(18, TaxCode::IGV),
+                Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Inclusive::fixed(2, TaxCode::ISC),
             ]),
             charges  : Adjusters::from([

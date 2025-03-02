@@ -30,7 +30,7 @@ final class UpdateQuantityTest extends RegularCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(44.8473, Tax\Inclusive::proporcional(18, TaxCode::IGV)),
+            self::createAdjustment(44.8473, Tax\Inclusive::proportional(18, TaxCode::IGV)),
             self::createAdjustment(6.0, Tax\Inclusive::fixed(2, TaxCode::ISC)),
         );
 

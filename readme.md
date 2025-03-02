@@ -133,14 +133,14 @@ Taxes can be established in two ways.
   use Vaened\PriceEngine\Adjustments\Tax;
   
   $amount->impose([
-    Tax\Inclusive::proporcional(18, 'IGV'); // 18%
+    Tax\Inclusive::proportional(18, 'IGV'); // 18%
     Tax\Inclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
   $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
-      Tax\Inclusive::proporcional(18, 'IGV'); // 18%
+      Tax\Inclusive::proportional(18, 'IGV'); // 18%
       Tax\Inclusive::fixed(2, 'ISC'); // 2 PEN
     ])
   );

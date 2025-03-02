@@ -90,8 +90,8 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
             ),
             quantity : 7,
             taxes    : Taxes::from([
-                Tax\Inclusive::proporcional(21, TaxCode::IVA),
-                Tax\Inclusive::proporcional(18, TaxCode::IGV),
+                Tax\Inclusive::proportional(21, TaxCode::IVA),
+                Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Exclusive::fixed(2.5, TaxCode::ISC)
             ]),
             discounts: Adjusters::from([
