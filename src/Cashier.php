@@ -37,7 +37,7 @@ abstract class Cashier implements TotalSummary
     )
     {
         $allTaxes        = $taxes->merge($amount->taxes())
-                                 ->onlyAdjustablesOf($amount->applicableCodes());
+                                 ->only($amount->applicableCodes());
         $applicableTaxes = $allTaxes->toAdjusters();
 
         $this->initializePrice(

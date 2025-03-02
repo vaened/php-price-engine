@@ -31,7 +31,7 @@ final class Taxes extends SecureList
         );
     }
 
-    public function onlyAdjustablesOf(TaxCodes $allowed): self
+    public function only(TaxCodes $allowed): self
     {
         return match (true) {
             $allowed->isNothingAllowed() => self::empty(),
