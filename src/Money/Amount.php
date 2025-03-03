@@ -66,7 +66,7 @@ final class Amount implements Priceable
             count($taxes) > 0 &&
             $this->applicableCodes()->isNothingAllowed()
         ) {
-            throw new UntaxableElement();
+            throw new NonTaxableItem();
         }
     }
 }

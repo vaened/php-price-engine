@@ -10,7 +10,7 @@ namespace Vaened\PriceEngine\Money;
 use Throwable;
 use Vaened\PriceEngine\PriceException;
 
-final class UntaxableElement extends PriceException
+final class NonTaxableItem extends PriceException
 {
     public function __construct(int $code = 0, ?Throwable $previous = null)
     {
