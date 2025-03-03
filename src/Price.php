@@ -12,8 +12,8 @@ use Brick\Money\Money;
 final class Price
 {
     public function __construct(
-        private readonly Money $grossUnitPrice,
         private readonly Money $netUnitPrice,
+        private readonly Money $grossUnitPrice,
     )
     {
     }
@@ -31,8 +31,8 @@ final class Price
     public function multipliedBy(int $quantity): self
     {
         return new self(
-            $this->grossUnitPrice->multipliedBy($quantity),
             $this->netUnitPrice->multipliedBy($quantity),
+            $this->grossUnitPrice->multipliedBy($quantity),
         );
     }
 }

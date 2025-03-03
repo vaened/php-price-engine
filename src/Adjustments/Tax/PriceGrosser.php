@@ -46,7 +46,7 @@ final class PriceGrosser
 
     private function proportionalTaxes(): Taxation
     {
-        return Inclusive::proporcional(
+        return Inclusive::proportional(
             $this->reduceTo(AdjusterType::Percentage, 0),
             'ProportionalTaxes'
         );

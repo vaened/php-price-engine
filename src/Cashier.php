@@ -41,8 +41,8 @@ abstract class Cashier implements TotalSummary
         $applicableTaxes = $allTaxes->toAdjusters();
 
         $this->initializePrice(
-            grossUnitPrice: PriceGrosser::for($allTaxes)->clean($amount->value()),
-            taxes         : $applicableTaxes
+            netUnitPrice: PriceGrosser::for($allTaxes)->clean($amount->value()),
+            taxes       : $applicableTaxes
         );
         $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
     }
@@ -115,18 +115,18 @@ abstract class Cashier implements TotalSummary
     public function total(): Money
     {
         return $this->subtotal()
-                    ->gross()
+                    ->net()
                     ->plus($this->taxes()->total())
                     ->plus($this->charges()->total())
                     ->minus($this->discounts()->total());
     }
 
-    protected function initializePrice(Money $grossUnitPrice, Adjusters $taxes): void
+    protected function initializePrice(Money $netUnitPrice, Adjusters $taxes): void
     {
         $this->price = new Price(
-            $grossUnitPrice,
-            netUnitPrice: $grossUnitPrice->plus(
-                AdjustmentManager::totalize($grossUnitPrice, $taxes)
+            $netUnitPrice,
+            grossUnitPrice: $netUnitPrice->plus(
+                AdjustmentManager::totalize($netUnitPrice, $taxes)
             ),
         );
     }

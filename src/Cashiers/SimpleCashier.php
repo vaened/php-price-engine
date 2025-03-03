@@ -22,6 +22,6 @@ final class SimpleCashier extends Cashier
 {
     protected function createUnitRate(Price $price): UnitRate
     {
-        return new ManualUnitRate($price->gross(), $price->gross(), $price->gross());
+        return new ManualUnitRate($price->net(), $price->net(), $price->net());
     }
 }
