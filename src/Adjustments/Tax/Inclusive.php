@@ -12,7 +12,7 @@ use UnitEnum;
 use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\AdjustmentType;
 
-final class Inclusive extends Taxation
+final class Inclusive extends TaxScheme
 {
     public static function proportional(int $percentage, BackedEnum|UnitEnum|string $code): self
     {

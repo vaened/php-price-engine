@@ -15,7 +15,7 @@ use Vaened\PriceEngine\Adjustments\AdjustmentType;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Helper;
 
-abstract class Taxation implements AdjustmentScheme
+abstract class TaxScheme implements AdjustmentScheme
 {
     private readonly string $code;
 

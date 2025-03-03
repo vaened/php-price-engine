@@ -30,13 +30,13 @@ final class PriceGrosser
     public function clean(Money $unitPrice): Money
     {
         return reduce(
-            static fn(Money $price, Taxation $taxation) => $price->minus(InclusiveAdjustmentHandler::extractFrom($price, $taxation)),
+            static fn(Money $price, TaxScheme $taxation) => $price->minus(InclusiveAdjustmentHandler::extractFrom($price, $taxation)),
             [$this->fixedTaxes(), $this->proportionalTaxes()],
             $unitPrice
         );
     }
 
-    private function fixedTaxes(): Taxation
+    private function fixedTaxes(): TaxScheme
     {
         return Inclusive::fixed(
             $this->reduceTo(AdjustmentType::Uniform, 0.0),
@@ -44,7 +44,7 @@ final class PriceGrosser
         );
     }
 
-    private function proportionalTaxes(): Taxation
+    private function proportionalTaxes(): TaxScheme
     {
         return Inclusive::proportional(
             $this->reduceTo(AdjustmentType::Percentage, 0),
@@ -59,16 +59,16 @@ final class PriceGrosser
 
     private function sum(): callable
     {
-        return static fn(int|float $acc, Taxation $taxation) => $acc + $taxation->value();
+        return static fn(int|float $acc, TaxScheme $taxation) => $acc + $taxation->value();
     }
 
     private function only(AdjustmentType $type): callable
     {
-        return static fn(Taxation $taxation) => $taxation->type() === $type;
+        return static fn(TaxScheme $taxation) => $taxation->type() === $type;
     }
 
     private function inclusives(): callable
     {
-        return static fn(Taxation $taxation) => $taxation->isInclusive();
+        return static fn(TaxScheme $taxation) => $taxation->isInclusive();
     }
 }

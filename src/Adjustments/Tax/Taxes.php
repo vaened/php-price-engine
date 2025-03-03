@@ -42,16 +42,16 @@ final class Taxes extends SecureList
 
     private function toCharge(): callable
     {
-        return static fn(Taxation $taxation) => $taxation->toCharge();
+        return static fn(TaxScheme $taxation) => $taxation->toCharge();
     }
 
     private function allowed(array $codes): callable
     {
-        return static fn(Taxation $taxation) => in_array($taxation->code(), $codes, true);
+        return static fn(TaxScheme $taxation) => in_array($taxation->code(), $codes, true);
     }
 
     public static function type(): string
     {
-        return Taxation::class;
+        return TaxScheme::class;
     }
 }
