@@ -11,8 +11,8 @@ use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Cashiers\SimpleCashier;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
@@ -90,9 +90,9 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
             ),
             quantity : 7,
             taxes    : Taxes::from([
-                Tax\Inclusive::proportional(21, TaxCode::IVA),
-                Tax\Inclusive::proportional(18, TaxCode::IGV),
-                Tax\Exclusive::fixed(2.5, TaxCode::ISC)
+                Taxation\Inclusive::proportional(21, TaxCode::IVA),
+                Taxation\Inclusive::proportional(18, TaxCode::IGV),
+                Taxation\Exclusive::fixed(2.5, TaxCode::ISC)
             ]),
             discounts: Adjustments::from([
                 Discount::proportional(2)->named(DiscountCode::NewUsers),

@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Tests\Cashiers\Regular;
 
 use Vaened\PriceEngine\Adjustments\{AdjustmentMode, Charge, Discount};
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Tests\Utils\{ChargeCode, DiscountCode, Summary, TaxCode};
 
 final class AddChargesTest extends RegularCashierTestCase
@@ -34,8 +34,8 @@ final class AddChargesTest extends RegularCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(89.6946, Tax\Inclusive::proportional(18, TaxCode::IGV)),
-            self::createAdjustment(12.0, Tax\Inclusive::fixed(2, TaxCode::ISC)),
+            self::createAdjustment(89.6946, Taxation\Inclusive::proportional(18, TaxCode::IGV)),
+            self::createAdjustment(12.0, Taxation\Inclusive::fixed(2, TaxCode::ISC)),
         );
 
         $this->assertCharges(

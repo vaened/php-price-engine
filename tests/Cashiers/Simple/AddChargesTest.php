@@ -10,7 +10,7 @@ namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Tests\Utils\ChargeCode;
 use Vaened\PriceEngine\Tests\Utils\DiscountCode;
 use Vaened\PriceEngine\Tests\Utils\Summary;
@@ -38,7 +38,7 @@ final class AddChargesTest extends SimpleCashierTestCase
         );
 
         $this->assertTaxes(
-            self::createAdjustment(173.5540, Tax\Inclusive::proportional(21, TaxCode::IVA)),
+            self::createAdjustment(173.5540, Taxation\Inclusive::proportional(21, TaxCode::IVA)),
         );
 
         $this->assertCharges(

@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjustments\Tax;
+namespace Vaened\PriceEngine\Adjustments\Taxation;
 
 use BackedEnum;
 use UnitEnum;

@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Tests\Cashiers\Regular;
 
 use Vaened\PriceEngine\Adjustments\{AdjustmentMode, Adjustments, Charge, Discount};
-use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Cashiers\RegularCashier;
 use Vaened\PriceEngine\Money\Amount;
@@ -78,9 +78,9 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
             ),
             quantity : 4,
             taxes    : Taxes::from([
-                Tax\Inclusive::proportional(21, TaxCode::IVA),
-                Tax\Inclusive::proportional(18, TaxCode::IGV),
-                Tax\Exclusive::fixed(3, TaxCode::ISC)
+                Taxation\Inclusive::proportional(21, TaxCode::IVA),
+                Taxation\Inclusive::proportional(18, TaxCode::IGV),
+                Taxation\Exclusive::fixed(3, TaxCode::ISC)
             ]),
             charges  : Adjustments::from([
                 Charge::proportional(5)->named(ChargeCode::Delivery),

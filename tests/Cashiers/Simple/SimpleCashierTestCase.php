@@ -10,8 +10,8 @@ namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Cashiers\SimpleCashier;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Money\Amount;
@@ -31,8 +31,8 @@ abstract class SimpleCashierTestCase extends CashierTestCase
             ),
             quantity : 10,
             taxes    : Taxes::from([
-                Tax\Inclusive::proportional(21, TaxCode::IVA),
-                Tax\Inclusive::proportional(18, TaxCode::IGV),
+                Taxation\Inclusive::proportional(21, TaxCode::IVA),
+                Taxation\Inclusive::proportional(18, TaxCode::IGV),
             ]),
             charges  : Adjustments::from([
                 Charge::proportional(5)->named(ChargeCode::POS),

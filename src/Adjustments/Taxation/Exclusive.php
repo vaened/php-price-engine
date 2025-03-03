@@ -5,14 +5,14 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjustments\Tax;
+namespace Vaened\PriceEngine\Adjustments\Taxation;
 
 use BackedEnum;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\AdjustmentType;
 
-final class Inclusive extends TaxScheme
+final class Exclusive extends TaxScheme
 {
     public static function proportional(int $percentage, BackedEnum|UnitEnum|string $code): self
     {
@@ -26,6 +26,6 @@ final class Inclusive extends TaxScheme
 
     public function isInclusive(): bool
     {
-        return true;
+        return false;
     }
 }

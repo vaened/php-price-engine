@@ -11,8 +11,8 @@ use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
-use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
-use Vaened\PriceEngine\Adjustments\Tax;
+use Vaened\PriceEngine\Adjustments\Taxation\{TaxCodes, Taxes};
+use Vaened\PriceEngine\Adjustments\Taxation;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Cashiers\RegularCashier;
 use Vaened\PriceEngine\Money\Amount;
@@ -32,8 +32,8 @@ abstract class RegularCashierTestCase extends CashierTestCase
             ),
             quantity : 6,
             taxes    : Taxes::from([
-                Tax\Inclusive::proportional(18, TaxCode::IGV),
-                Tax\Inclusive::fixed(2, TaxCode::ISC),
+                Taxation\Inclusive::proportional(18, TaxCode::IGV),
+                Taxation\Inclusive::fixed(2, TaxCode::ISC),
             ]),
             charges  : Adjustments::from([
                 Charge::proportional(5)->named(ChargeCode::POS),

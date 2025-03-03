@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-namespace Vaened\PriceEngine\Adjustments\Tax;
+namespace Vaened\PriceEngine\Adjustments\Taxation;
 
 use Brick\Money\Money;
 use Vaened\PriceEngine\Adjustments\AdjustmentType;

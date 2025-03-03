@@ -11,7 +11,7 @@ use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\{Adjustments, Charge, Discount};
-use Vaened\PriceEngine\Adjustments\Tax\{TaxStripper, Taxes};
+use Vaened\PriceEngine\Adjustments\Taxation\{TaxStripper, Taxes};
 use Vaened\PriceEngine\Money\{Amount};
 
 use function dd;

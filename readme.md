@@ -130,35 +130,35 @@ Taxes can be established in two ways.
 
 - **Inclusive**: Taxes included in the unit price, and will be cleared during calculations
   ```php
-  use Vaened\PriceEngine\Adjustments\Tax;
+  use Vaened\PriceEngine\Adjustments\Taxation;
   
   $amount->impose([
-    Tax\Inclusive::proportional(18, 'IGV'); // 18%
-    Tax\Inclusive::fixed(2, 'ISC'); // 2 PEN
+    Taxation\Inclusive::proportional(18, 'IGV'); // 18%
+    Taxation\Inclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
   $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
-      Tax\Inclusive::proportional(18, 'IGV'); // 18%
-      Tax\Inclusive::fixed(2, 'ISC'); // 2 PEN
+      Taxation\Inclusive::proportional(18, 'IGV'); // 18%
+      Taxation\Inclusive::fixed(2, 'ISC'); // 2 PEN
     ])
   );
   ```
 - **Exclusive**: Taxes not included in the unit price, and will be added for the final calculations.
   ```php
-  use Vaened\PriceEngine\Adjustments\Tax;
+  use Vaened\PriceEngine\Adjustments\Taxation;
 
   $amount->impose([
-    Tax\Exclusive::proportional(18, 'IGV'); // 18%
-    Tax\Exclusive::fixed(2, 'ISC'); // 2 PEN
+    Taxation\Exclusive::proportional(18, 'IGV'); // 18%
+    Taxation\Exclusive::fixed(2, 'ISC'); // 2 PEN
   ]);
   // or
   $cashier = new RegularCashier(
     ...
     taxes : Taxes::from([
-      Tax\Exclusive::proportional(18, 'IGV'); // 18%
-      Tax\Exclusive::fixed(2, 'ISC'); // 2 PEN
+      Taxation\Exclusive::proportional(18, 'IGV'); // 18%
+      Taxation\Exclusive::fixed(2, 'ISC'); // 2 PEN
     ])
   );
   ```
