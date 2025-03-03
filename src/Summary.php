@@ -9,7 +9,7 @@ namespace Vaened\PriceEngine;
 
 use Brick\Money\Money;
 
-interface TotalSummary
+interface Summary
 {
     public function quantity(): int;
 

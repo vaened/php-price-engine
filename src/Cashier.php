@@ -16,7 +16,7 @@ use Vaened\PriceEngine\Money\{Amount};
 
 use function dd;
 
-abstract class Cashier implements TotalSummary
+abstract class Cashier implements Summary
 {
     protected AdjustmentManager $discounts;
 
