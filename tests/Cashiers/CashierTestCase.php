@@ -27,6 +27,12 @@ abstract class CashierTestCase extends TestCase
 
     abstract protected function cashier(): Cashier;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->cashier = $this->cashier();
+    }
+
     public function assertDiscounts(Adjustment ...$expected): void
     {
         each(
@@ -80,12 +86,6 @@ abstract class CashierTestCase extends TestCase
         $this->assertTotal('charges->total', $summary->totalCharges());
         $this->assertTotal('discounts->total', $summary->totalDiscounts());
         $this->assertTotal('total', $summary->total());
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->cashier = $this->cashier();
     }
 
     private function assertTotal(string $label, Money $expected): void
