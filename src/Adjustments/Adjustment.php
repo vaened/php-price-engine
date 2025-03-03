@@ -16,14 +16,14 @@ use Vaened\PriceEngine\Helper;
 use function sprintf;
 use function uniqid;
 
-class Adjuster implements AdjusterScheme
+class Adjustment implements AdjustmentScheme
 {
     private ?string $code;
 
     public function __construct(
-        private readonly AdjusterType   $type,
+        private readonly AdjustmentType $type,
         private readonly int|float      $value,
-        private readonly AdjusterMode   $mode,
+        private readonly AdjustmentMode $mode,
         BackedEnum|UnitEnum|string|null $code = null,
     )
     {
@@ -32,12 +32,12 @@ class Adjuster implements AdjusterScheme
 
     public static function proportional(int $percentage): static
     {
-        return new static(AdjusterType::Percentage, $percentage, AdjusterMode::PerUnit);
+        return new static(AdjustmentType::Percentage, $percentage, AdjustmentMode::PerUnit);
     }
 
-    public static function fixed(float $amount, AdjusterMode $mode = AdjusterMode::ForTotal): static
+    public static function fixed(float $amount, AdjustmentMode $mode = AdjustmentMode::ForTotal): static
     {
-        return new static(AdjusterType::Uniform, $amount, $mode);
+        return new static(AdjustmentType::Uniform, $amount, $mode);
     }
 
     public function named(BackedEnum|UnitEnum|string $code): static
@@ -51,12 +51,12 @@ class Adjuster implements AdjusterScheme
         return $this->code ??= uniqid(sprintf('%s_', (new ReflectionClass($this))->getShortName()), true);
     }
 
-    public function type(): AdjusterType
+    public function type(): AdjustmentType
     {
         return $this->type;
     }
 
-    public function mode(): AdjusterMode
+    public function mode(): AdjustmentMode
     {
         return $this->mode;
     }

@@ -8,9 +8,9 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Handlers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
-use Vaened\PriceEngine\Adjustments\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentType;
 use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\PriceEngine\Helper;
 
@@ -31,14 +31,14 @@ use Vaened\PriceEngine\Helper;
  */
 final class ExclusiveAdjustmentHandler
 {
-    public static function apply(Money $unitPrice, int $quantity, AdjusterScheme $scheme): Money
+    public static function apply(Money $unitPrice, int $quantity, AdjustmentScheme $scheme): Money
     {
-        if ($scheme->type() === AdjusterType::Uniform) {
+        if ($scheme->type() === AdjustmentType::Uniform) {
             $money = Money::of($scheme->value(), $unitPrice->getCurrency(), $unitPrice->getContext());
-            return $scheme->mode() === AdjusterMode::ForTotal ? $money : $money->multipliedBy($quantity);
+            return $scheme->mode() === AdjustmentMode::ForTotal ? $money : $money->multipliedBy($quantity);
         }
 
-        return $scheme->mode() === AdjusterMode::ForTotal
+        return $scheme->mode() === AdjustmentMode::ForTotal
             ? self::extractProportionally(
                 $unitPrice->multipliedBy($quantity),
                 $scheme
@@ -47,7 +47,7 @@ final class ExclusiveAdjustmentHandler
                   ->multipliedBy($quantity);
     }
 
-    private static function extractProportionally(Money $money, AdjusterScheme $scheme): Money
+    private static function extractProportionally(Money $money, AdjustmentScheme $scheme): Money
     {
         return $money->multipliedBy(
             Helper::percentageize($scheme->value()),

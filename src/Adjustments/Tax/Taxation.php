@@ -9,21 +9,21 @@ namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use BackedEnum;
 use UnitEnum;
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
-use Vaened\PriceEngine\Adjustments\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentType;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Helper;
 
-abstract class Taxation implements AdjusterScheme
+abstract class Taxation implements AdjustmentScheme
 {
     private readonly string $code;
 
     protected function __construct(
-        private readonly AdjusterType $type,
-        private readonly float|int    $value,
-        private readonly AdjusterMode $mode,
-        BackedEnum|UnitEnum|string    $code,
+        private readonly AdjustmentType $type,
+        private readonly float|int      $value,
+        private readonly AdjustmentMode $mode,
+        BackedEnum|UnitEnum|string      $code,
     )
     {
         $this->code = Helper::processEnumerableCode($code);
@@ -36,12 +36,12 @@ abstract class Taxation implements AdjusterScheme
         return $this->code;
     }
 
-    public function type(): AdjusterType
+    public function type(): AdjustmentType
     {
         return $this->type;
     }
 
-    public function mode(): AdjusterMode
+    public function mode(): AdjustmentMode
     {
         return $this->mode;
     }

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Regular;
 
-use Vaened\PriceEngine\Adjustments\{AdjusterMode, Adjusters, Charge, Discount};
+use Vaened\PriceEngine\Adjustments\{AdjustmentMode, Adjustments, Charge, Discount};
 use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
 use Vaened\PriceEngine\Adjustments\Tax;
 use Vaened\PriceEngine\Cashier;
@@ -37,7 +37,7 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
             )
         );
 
-        $this->cashier->add(Charge::fixed(5, AdjusterMode::PerUnit));
+        $this->cashier->add(Charge::fixed(5, AdjustmentMode::PerUnit));
         $this->assertTotals(
             $summary->andTotalChargesAre(self::money(40.9500))
                     ->andDefinitiveTotalAre(self::money(227.6700))
@@ -82,12 +82,12 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
                 Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Exclusive::fixed(3, TaxCode::ISC)
             ]),
-            charges  : Adjusters::from([
+            charges  : Adjustments::from([
                 Charge::proportional(5)->named(ChargeCode::Delivery),
             ]),
-            discounts: Adjusters::from([
+            discounts: Adjustments::from([
                 Discount::proportional(12)->named(DiscountCode::NewUsers),
-                Discount::fixed(1, AdjusterMode::PerUnit)->named(DiscountCode::Promotional),
+                Discount::fixed(1, AdjustmentMode::PerUnit)->named(DiscountCode::Promotional),
             ])
         );
     }

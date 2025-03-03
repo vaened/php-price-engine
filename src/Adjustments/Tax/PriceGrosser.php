@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Adjustments\Tax;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustments\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjustmentType;
 use Vaened\PriceEngine\Handlers\InclusiveAdjustmentHandler;
 
 use function Lambdish\Phunctional\reduce;
@@ -39,7 +39,7 @@ final class PriceGrosser
     private function fixedTaxes(): Taxation
     {
         return Inclusive::fixed(
-            $this->reduceTo(AdjusterType::Uniform, 0.0),
+            $this->reduceTo(AdjustmentType::Uniform, 0.0),
             'FixedTaxes'
         );
     }
@@ -47,12 +47,12 @@ final class PriceGrosser
     private function proportionalTaxes(): Taxation
     {
         return Inclusive::proportional(
-            $this->reduceTo(AdjusterType::Percentage, 0),
+            $this->reduceTo(AdjustmentType::Percentage, 0),
             'ProportionalTaxes'
         );
     }
 
-    private function reduceTo(AdjusterType $type, int|float $default)
+    private function reduceTo(AdjustmentType $type, int|float $default)
     {
         return $this->taxes->filter($this->only($type))->reduce($this->sum(), $default);
     }
@@ -62,7 +62,7 @@ final class PriceGrosser
         return static fn(int|float $acc, Taxation $taxation) => $acc + $taxation->value();
     }
 
-    private function only(AdjusterType $type): callable
+    private function only(AdjustmentType $type): callable
     {
         return static fn(Taxation $taxation) => $taxation->type() === $type;
     }

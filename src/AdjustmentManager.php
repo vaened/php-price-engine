@@ -10,8 +10,8 @@ namespace Vaened\PriceEngine;
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
-use Vaened\PriceEngine\Adjustments\Adjusters;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\Adjustments;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
 use Vaened\PriceEngine\Concerns\Cacheable;
 use Vaened\PriceEngine\Handlers\ExclusiveAdjustmentHandler;
 
@@ -28,18 +28,18 @@ final class AdjustmentManager
     protected Modifiers $modifiers;
 
     public function __construct(
-        private readonly Adjusters $adjusters,
-        private Money              $unitPrice,
-        private int                $quantity,
+        private readonly Adjustments $adjustments,
+        private Money                $unitPrice,
+        private int                  $quantity,
     )
     {
         $this->forceRecalculation();
         $this->breakdownAdjustment();
     }
 
-    public static function totalize(Money $price, Adjusters $adjustersToApply): Money
+    public static function totalize(Money $price, Adjustments $adjustmentsToApply): Money
     {
-        return (new self($adjustersToApply, $price, 1))->total();
+        return (new self($adjustmentsToApply, $price, 1))->total();
     }
 
     public function total(): Money
@@ -47,15 +47,15 @@ final class AdjustmentManager
         return $this->modifiers()->total();
     }
 
-    public function add(array $adjusters): void
+    public function add(array $adjustments): void
     {
-        each(fn(AdjusterScheme $adjuster) => $this->adjusters->push($adjuster), $adjusters);
+        each(fn(AdjustmentScheme $adjustment) => $this->adjustments->push($adjustment), $adjustments);
         $this->forceRecalculation();
     }
 
-    public function remove(BackedEnum|UnitEnum|string $adjusterCode): void
+    public function remove(BackedEnum|UnitEnum|string $adjustmentCode): void
     {
-        $this->adjusters->remove($adjusterCode);
+        $this->adjustments->remove($adjustmentCode);
         $this->forceRecalculation();
     }
 
@@ -78,9 +78,9 @@ final class AdjustmentManager
             : $this->modifiers;
     }
 
-    public function adjusters(): Adjusters
+    public function adjustments(): Adjustments
     {
-        return $this->adjusters;
+        return $this->adjustments;
     }
 
     protected function cacheIdentifier(): string
@@ -91,7 +91,7 @@ final class AdjustmentManager
     private function breakdownAdjustment(): Modifiers
     {
         return new Modifiers(
-            $this->adjusters->map($this->createAdjustment()),
+            $this->adjustments->map($this->createAdjustment()),
             $this->unitPrice->getCurrency(),
             $this->unitPrice->getContext(),
         );
@@ -99,12 +99,12 @@ final class AdjustmentManager
 
     private function createAdjustment(): callable
     {
-        return fn(AdjusterScheme $adjuster) => new Modifier(
-            ExclusiveAdjustmentHandler::apply($this->unitPrice, $this->quantity, $adjuster),
-            $adjuster->type(),
-            $adjuster->mode(),
-            $adjuster->value(),
-            $adjuster->code()
+        return fn(AdjustmentScheme $adjustment) => new Modifier(
+            ExclusiveAdjustmentHandler::apply($this->unitPrice, $this->quantity, $adjustment),
+            $adjustment->type(),
+            $adjustment->mode(),
+            $adjustment->value(),
+            $adjustment->code()
         );
     }
 }

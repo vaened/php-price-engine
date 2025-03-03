@@ -8,18 +8,18 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
-use Vaened\PriceEngine\Adjustments\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentType;
 
-final class Modifier implements AdjusterScheme
+final class Modifier implements AdjustmentScheme
 {
     public function __construct(
-        private readonly Money        $amount,
-        private readonly AdjusterType $type,
-        private readonly AdjusterMode $mode,
-        private readonly int|float    $value,
-        private readonly string       $code
+        private readonly Money          $amount,
+        private readonly AdjustmentType $type,
+        private readonly AdjustmentMode $mode,
+        private readonly int|float      $value,
+        private readonly string         $code
     )
     {
     }
@@ -34,7 +34,7 @@ final class Modifier implements AdjusterScheme
         return $this->code;
     }
 
-    public function type(): AdjusterType
+    public function type(): AdjustmentType
     {
         return $this->type;
     }
@@ -44,7 +44,7 @@ final class Modifier implements AdjusterScheme
         return $this->value;
     }
 
-    public function mode(): AdjusterMode
+    public function mode(): AdjustmentMode
     {
         return $this->mode;
     }

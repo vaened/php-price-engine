@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Regular;
 
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
+use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
@@ -35,11 +35,11 @@ abstract class RegularCashierTestCase extends CashierTestCase
                 Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Inclusive::fixed(2, TaxCode::ISC),
             ]),
-            charges  : Adjusters::from([
+            charges  : Adjustments::from([
                 Charge::proportional(5)->named(ChargeCode::POS),
-                Charge::fixed(2, AdjusterMode::PerUnit)->named(ChargeCode::Delivery)
+                Charge::fixed(2, AdjustmentMode::PerUnit)->named(ChargeCode::Delivery)
             ]),
-            discounts: Adjusters::from([
+            discounts: Adjustments::from([
                 Discount::proportional(2)->named(DiscountCode::NewUsers),
             ])
         );

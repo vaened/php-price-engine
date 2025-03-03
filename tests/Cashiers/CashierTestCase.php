@@ -116,7 +116,7 @@ abstract class CashierTestCase extends TestCase
             self::assertNotNull(
                 $adjustment,
                 sprintf(
-                    'Failed asserting that adjuster <%s> is in the cart.',
+                    'Failed asserting that adjustment <%s> is in the cart.',
                     $expected->code()
                 )
             );

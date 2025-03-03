@@ -12,7 +12,7 @@ use Brick\Money\Money;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Vaened\PriceEngine\Modifier;
 use Vaened\PriceEngine\Modifiers;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
 use Vaened\Support\Types\ArrayList;
 
 abstract class TestCase extends PhpUnitTestCase
@@ -30,7 +30,7 @@ abstract class TestCase extends PhpUnitTestCase
         return new Modifiers(new ArrayList($adjustments), $default->getCurrency(), $default->getContext());
     }
 
-    protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Modifier
+    protected static function createAdjustment(float $amount, AdjustmentScheme $scheme): Modifier
     {
         return new Modifier(self::money($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
     }

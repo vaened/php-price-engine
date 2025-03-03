@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\PriceEngine\Adjustments\Tax;
@@ -22,7 +22,7 @@ final class AddChargesTest extends SimpleCashierTestCase
     {
         $this->cashier->add(
             $testing12Discount = Charge::proportional(12)->named('TESTING-12%'),
-            $testing20Discount = Charge::fixed(20, AdjusterMode::PerUnit)->named('TESTING-20'),
+            $testing20Discount = Charge::fixed(20, AdjustmentMode::PerUnit)->named('TESTING-20'),
         );
 
         $this->assertTotals(

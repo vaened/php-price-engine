@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Handlers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustments\AdjusterScheme;
-use Vaened\PriceEngine\Adjustments\AdjusterType;
+use Vaened\PriceEngine\Adjustments\AdjustmentScheme;
+use Vaened\PriceEngine\Adjustments\AdjustmentType;
 use Vaened\PriceEngine\PriceEngineConfig;
 use Vaened\PriceEngine\Helper;
 
@@ -28,17 +28,17 @@ use Vaened\PriceEngine\Helper;
  */
 final class InclusiveAdjustmentHandler
 {
-    public static function extractFrom(Money $total, AdjusterScheme $scheme): Money
+    public static function extractFrom(Money $total, AdjustmentScheme $scheme): Money
     {
         return match ($scheme->type()) {
-            AdjusterType::Percentage => $total->minus(
+            AdjustmentType::Percentage => $total->minus(
                 $total->dividedBy(
                     1 + Helper::percentageize($scheme->value()),
                     PriceEngineConfig::defaultRoundingMode()
                 )
             ),
 
-            AdjusterType::Uniform => Money::of(
+            AdjustmentType::Uniform    => Money::of(
                 $scheme->value(),
                 $total->getCurrency(),
                 $total->getContext()

@@ -10,7 +10,7 @@ namespace Vaened\PriceEngine;
 use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
-use Vaened\PriceEngine\Adjustments\{Adjusters, Charge, Discount};
+use Vaened\PriceEngine\Adjustments\{Adjustments, Charge, Discount};
 use Vaened\PriceEngine\Adjustments\Tax\{PriceGrosser, Taxes};
 use Vaened\PriceEngine\Money\{Amount};
 
@@ -32,19 +32,19 @@ abstract class Cashier implements Summary
         Amount      $amount,
         private int $quantity,
         Taxes       $taxes = new Taxes([]),
-        Adjusters   $charges = new Adjusters([]),
-        Adjusters   $discounts = new Adjusters([]),
+        Adjustments $charges = new Adjustments([]),
+        Adjustments $discounts = new Adjustments([]),
     )
     {
         $allTaxes        = $taxes->merge($amount->taxes())
                                  ->only($amount->applicableCodes());
-        $applicableTaxes = $allTaxes->toAdjusters();
+        $applicableTaxes = $allTaxes->toAdjustments();
 
         $this->initializePrice(
             netUnitPrice: PriceGrosser::for($allTaxes)->clean($amount->value()),
             taxes       : $applicableTaxes
         );
-        $this->initializeMoneyAdjusters($discounts, $charges, $applicableTaxes);
+        $this->initializeMoneyAdjustments($discounts, $charges, $applicableTaxes);
     }
 
     abstract protected function createUnitRate(Price $price): UnitRate;
@@ -121,7 +121,7 @@ abstract class Cashier implements Summary
                     ->minus($this->discounts()->total());
     }
 
-    protected function initializePrice(Money $netUnitPrice, Adjusters $taxes): void
+    protected function initializePrice(Money $netUnitPrice, Adjustments $taxes): void
     {
         $this->price = new Price(
             $netUnitPrice,
@@ -131,7 +131,7 @@ abstract class Cashier implements Summary
         );
     }
 
-    protected function initializeMoneyAdjusters(Adjusters $discounts, Adjusters $charges, Adjusters $taxes): void
+    protected function initializeMoneyAdjustments(Adjustments $discounts, Adjustments $charges, Adjustments $taxes): void
     {
         $this->unitRate  = $this->createUnitRate($this->price);
         $this->discounts = new AdjustmentManager($discounts, $this->unitRate->discountable(), $this->quantity);

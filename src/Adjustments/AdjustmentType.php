@@ -7,9 +7,9 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjustments;
 
-enum AdjusterMode: string
+enum AdjustmentType: string
 {
-    case PerUnit = 'UNI';
+    case Percentage = 'PCT';
 
-    case ForTotal = 'TOT';
+    case Uniform = 'FIX';
 }

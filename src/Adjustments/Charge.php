@@ -7,6 +7,6 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjustments;
 
-final class Charge extends Adjuster
+final class Charge extends Adjustment
 {
 }

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Regular;
 
-use Vaened\PriceEngine\Adjustments\{AdjusterMode, Charge, Discount};
+use Vaened\PriceEngine\Adjustments\{AdjustmentMode, Charge, Discount};
 use Vaened\PriceEngine\Adjustments\Tax;
 use Vaened\PriceEngine\Tests\Utils\{ChargeCode, DiscountCode, Summary, TaxCode};
 
@@ -34,7 +34,7 @@ final class InitialCalculationsTest extends RegularCashierTestCase
 
         $this->assertCharges(
             self::createAdjustment(30.0, Charge::proportional(5)->named(ChargeCode::POS)),
-            self::createAdjustment(12.0, Charge::fixed(2, AdjusterMode::PerUnit)->named(ChargeCode::Delivery)),
+            self::createAdjustment(12.0, Charge::fixed(2, AdjustmentMode::PerUnit)->named(ChargeCode::Delivery)),
         );
 
         $this->assertDiscounts(

@@ -14,7 +14,7 @@ use Vaened\Support\Types\SecureList;
 
 use function Lambdish\Phunctional\filter;
 
-class Adjusters extends SecureList
+class Adjustments extends SecureList
 {
     public function __construct(iterable $items)
     {
@@ -34,18 +34,18 @@ class Adjusters extends SecureList
     public function remove(BackedEnum|UnitEnum|string $code): void
     {
         $this->items = filter(
-            static fn(AdjusterScheme $adjuster) => $adjuster->code() !== Helper::processEnumerableCode($code),
+            static fn(AdjustmentScheme $adjustment) => $adjustment->code() !== Helper::processEnumerableCode($code),
             $this->items
         );
     }
 
-    public function push(AdjusterScheme $adjuster): void
+    public function push(AdjustmentScheme $adjustment): void
     {
-        $this->items[] = $adjuster;
+        $this->items[] = $adjustment;
     }
 
     public static function type(): string
     {
-        return AdjusterScheme::class;
+        return AdjustmentScheme::class;
     }
 }

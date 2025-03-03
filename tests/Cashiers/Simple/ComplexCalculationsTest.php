@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Tests\Cashiers\Simple;
 
-use Vaened\PriceEngine\Adjustments\AdjusterMode;
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\AdjustmentMode;
+use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\PriceEngine\Adjustments\Charge;
 use Vaened\PriceEngine\Adjustments\Discount;
 use Vaened\PriceEngine\Adjustments\Tax\{TaxCodes, Taxes};
@@ -47,7 +47,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
                 ->andDefinitiveTotalAre(self::money(109.7034))
         );
 
-        $this->cashier->apply(Discount::fixed(6, AdjusterMode::PerUnit)->named(DiscountCode::Promotional));
+        $this->cashier->apply(Discount::fixed(6, AdjustmentMode::PerUnit)->named(DiscountCode::Promotional));
         $this->assertTotals(
             $summary
                 ->andTotalDiscountsAre(self::money(19.7034))
@@ -94,7 +94,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
                 Tax\Inclusive::proportional(18, TaxCode::IGV),
                 Tax\Exclusive::fixed(2.5, TaxCode::ISC)
             ]),
-            discounts: Adjusters::from([
+            discounts: Adjustments::from([
                 Discount::proportional(2)->named(DiscountCode::NewUsers),
             ])
         );

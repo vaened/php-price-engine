@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjustments\Tax;
 
-use Vaened\PriceEngine\Adjustments\Adjusters;
+use Vaened\PriceEngine\Adjustments\Adjustments;
 use Vaened\Support\Types\SecureList;
 
 use function in_array;
@@ -24,9 +24,9 @@ final class Taxes extends SecureList
         return new self([]);
     }
 
-    public function toAdjusters(): Adjusters
+    public function toAdjustments(): Adjustments
     {
-        return Adjusters::from(
+        return Adjustments::from(
             $this->map($this->toCharge())
         );
     }

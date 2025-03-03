@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace Vaened\PriceEngine\Adjustments;
 
-interface AdjusterScheme
+interface AdjustmentScheme
 {
     public function code(): string;
 
-    public function type(): AdjusterType;
+    public function type(): AdjustmentType;
 
-    public function mode(): AdjusterMode;
+    public function mode(): AdjustmentMode;
 
     public function value(): float|int;
 }
