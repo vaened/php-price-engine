@@ -129,4 +129,19 @@ abstract class CashierTestCase extends TestCase
     {
         $this->assertEquals($this->cashier->quantity(), $quantity);
     }
+
+
+    protected function show(): void
+    {
+        $cashier = $this->cashier;
+
+        echo "unitPrice GROSS: {$cashier->unitPrice()->gross()}" . PHP_EOL;
+        echo "unitPrice NET: {$cashier->unitPrice()->net()}" . PHP_EOL;
+        echo "total Discounts: {$cashier->discounts()->total()}" . PHP_EOL;
+        echo "total Charges: {$cashier->charges()->total()}" . PHP_EOL;
+        echo "taxes: {$cashier->taxes()->total()}" . PHP_EOL;
+        echo "subtotal GROSS: {$cashier->subtotal()->gross()}" . PHP_EOL;
+        echo "subtotal NET: {$cashier->subtotal()->net()}" . PHP_EOL;
+        echo "total: {$cashier->total()}" . PHP_EOL;
+    }
 }
