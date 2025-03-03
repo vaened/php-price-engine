@@ -11,7 +11,7 @@ use BackedEnum;
 use Brick\Money\Money;
 use UnitEnum;
 use Vaened\PriceEngine\Adjustments\{Adjustments, Charge, Discount};
-use Vaened\PriceEngine\Adjustments\Tax\{PriceGrosser, Taxes};
+use Vaened\PriceEngine\Adjustments\Tax\{TaxStripper, Taxes};
 use Vaened\PriceEngine\Money\{Amount};
 
 use function dd;
@@ -41,7 +41,7 @@ abstract class Cashier implements Summary
         $applicableTaxes = $allTaxes->toAdjustments();
 
         $this->initializePrice(
-            netUnitPrice: PriceGrosser::for($allTaxes)->clean($amount->value()),
+            netUnitPrice: TaxStripper::for($allTaxes)->clean($amount->value()),
             taxes       : $applicableTaxes
         );
         $this->initializeMoneyAdjustments($discounts, $charges, $applicableTaxes);

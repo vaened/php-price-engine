@@ -13,7 +13,7 @@ use Vaened\PriceEngine\Handlers\InclusiveAdjustmentHandler;
 
 use function Lambdish\Phunctional\reduce;
 
-final class PriceGrosser
+final class TaxStripper
 {
     private readonly Taxes $taxes;
 
