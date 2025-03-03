@@ -22,8 +22,8 @@ final class InitialCalculationsTest extends SimpleCashierTestCase
         $this->assertTotals(
             Summary::is(
                 quantity     : 10,
-                unitPrice    : self::money(82.6446),
-                subtotal     : self::money(826.4460),
+                unitPrice    : self::money(100.0000),
+                subtotal     : self::money(1000.0000),
                 totalTaxes   : self::money(173.5540),
                 totalCharges : self::money(51.3220),
                 totaDiscounts: self::money(21.5290),

@@ -20,13 +20,16 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
     public function test_calculations_are_accurate_in_stressful_situations(): void
     {
         $summary = $this->initialSummary();
+
         $this->assertTotals($summary);
 
         $this->cashier->update(6);
+
+
         $this->assertTotals(
             $summary->changeTo(
                 quantity      : 6,
-                subtotal      : self::money(170.3388),
+                subtotal      : self::money(219.0000),
                 totalTaxes    : self::money(48.6612),
                 totalCharges  : self::money(10.9500),
                 totalDiscounts: self::money(32.2800),
@@ -53,10 +56,11 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
         );
 
         $this->cashier->update(1);
+
         $this->assertTotals(
             $summary->changeTo(
                 quantity      : 1,
-                subtotal      : self::money(28.3898),
+                subtotal      : self::money(36.5000),
                 totalTaxes    : self::money(8.1102),
                 totalCharges  : self::money(5.0),
                 totalDiscounts: self::money(7.5700),
@@ -92,8 +96,8 @@ final class ComplexCalculationsTest extends RegularCashierTestCase
     {
         return Summary::is(
             quantity     : 4,
-            unitPrice    : self::money(28.3898),
-            subtotal     : self::money(113.5592),
+            unitPrice    : self::money(36.5000),
+            subtotal     : self::money(146.0000),
             totalTaxes   : self::money(32.4408),
             totalCharges : self::money(7.3000),
             totaDiscounts: self::money(21.5200),

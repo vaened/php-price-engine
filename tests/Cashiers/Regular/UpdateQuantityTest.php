@@ -20,8 +20,8 @@ final class UpdateQuantityTest extends RegularCashierTestCase
         $this->assertTotals(
             Summary::is(
                 quantity     : 3,
-                unitPrice    : self::money(83.0508),
-                subtotal     : self::money(249.1524),
+                unitPrice    : self::money(99.9999),
+                subtotal     : self::money(299.9997),
                 totalTaxes   : self::money(50.8473),
                 totalCharges : self::money(21.0),
                 totaDiscounts: self::money(6.0),

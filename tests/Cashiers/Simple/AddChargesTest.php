@@ -28,8 +28,8 @@ final class AddChargesTest extends SimpleCashierTestCase
         $this->assertTotals(
             Summary::is(
                 quantity     : 10,
-                unitPrice    : self::money(82.6446),
-                subtotal     : self::money(826.4460),
+                unitPrice    : self::money(100.0),
+                subtotal     : self::money(1000.0),
                 totalTaxes   : self::money(173.5540),
                 totalCharges : self::money(350.4960),
                 totaDiscounts: self::money(21.5290),

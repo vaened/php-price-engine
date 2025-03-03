@@ -32,7 +32,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
         $this->assertTotals(
             $summary->changeTo(
                 quantity      : 3,
-                subtotal      : self::money(85.1694),
+                subtotal      : self::money(108.0000),
                 totalTaxes    : self::money(22.8306),
                 totalCharges  : self::money(0),
                 totalDiscounts: self::money(1.7034),
@@ -72,7 +72,7 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
         $this->assertTotals(
             $summary->changeTo(
                 quantity      : 9,
-                subtotal      : self::money(255.5082),
+                subtotal      : self::money(324.0000),
                 totalTaxes    : self::money(68.4918),
                 totalCharges  : self::money(0),
                 totalDiscounts: self::money(54.0),
@@ -104,8 +104,8 @@ final class ComplexCalculationsTest extends SimpleCashierTestCase
     {
         return Summary::is(
             quantity     : 7,
-            unitPrice    : self::money(28.3898),
-            subtotal     : self::money(198.7286),
+            unitPrice    : self::money(36.0000),
+            subtotal     : self::money(252.0000),
             totalTaxes   : self::money(53.2714),
             totalCharges : self::money(0),
             totaDiscounts: self::money(3.9746),

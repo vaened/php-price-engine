@@ -135,6 +135,7 @@ abstract class CashierTestCase extends TestCase
     {
         $cashier = $this->cashier;
 
+        echo "quantity: {$cashier->quantity()}" . PHP_EOL;
         echo "unitPrice GROSS: {$cashier->unitPrice()->gross()}" . PHP_EOL;
         echo "unitPrice NET: {$cashier->unitPrice()->net()}" . PHP_EOL;
         echo "total Discounts: {$cashier->discounts()->total()}" . PHP_EOL;

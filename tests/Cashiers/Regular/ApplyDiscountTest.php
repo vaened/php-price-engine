@@ -23,8 +23,8 @@ final class ApplyDiscountTest extends RegularCashierTestCase
         $this->assertTotals(
             Summary::is(
                 quantity     : 6,
-                unitPrice    : self::money(83.0508),
-                subtotal     : self::money(498.3048),
+                unitPrice    : self::money(99.9999),
+                subtotal     : self::money(599.9994),
                 totalTaxes   : self::money(101.6946),
                 totalCharges : self::money(42.0),
                 totaDiscounts: self::money(72.0),

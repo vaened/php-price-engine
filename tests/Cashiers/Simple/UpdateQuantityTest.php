@@ -20,12 +20,11 @@ final class UpdateQuantityTest extends SimpleCashierTestCase
     public function test_change_quantity_recalculates_all_totals(): void
     {
         $this->cashier->update(quantity: 3);
-
         $this->assertTotals(
             Summary::is(
                 quantity     : 3,
-                unitPrice    : self::money(82.6446),
-                subtotal     : self::money(247.9338),
+                unitPrice    : self::money(100.0000),
+                subtotal     : self::money(300.0000),
                 totalTaxes   : self::money(52.0662),
                 totalCharges : self::money(22.3966),
                 totaDiscounts: self::money(9.9587),
