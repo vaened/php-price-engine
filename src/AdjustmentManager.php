@@ -25,7 +25,7 @@ final class AdjustmentManager
         cleanCache as forceRecalculation;
     }
 
-    protected Adjustments $adjustments;
+    protected Modifiers $modifiers;
 
     public function __construct(
         private readonly Adjusters $adjusters,
@@ -44,7 +44,7 @@ final class AdjustmentManager
 
     public function total(): Money
     {
-        return $this->adjustments()->total();
+        return $this->modifiers()->total();
     }
 
     public function add(array $adjusters): void
@@ -71,11 +71,11 @@ final class AdjustmentManager
         $this->forceRecalculation();
     }
 
-    public function adjustments(): Adjustments
+    public function modifiers(): Modifiers
     {
         return $this->requiresRecalculation()
-            ? $this->adjustments = $this->breakdownAdjustment()
-            : $this->adjustments;
+            ? $this->modifiers = $this->breakdownAdjustment()
+            : $this->modifiers;
     }
 
     public function adjusters(): Adjusters
@@ -88,9 +88,9 @@ final class AdjustmentManager
         return sprintf('[%s]X[%d]', $this->unitPrice->getAmount()->__toString(), $this->quantity);
     }
 
-    private function breakdownAdjustment(): Adjustments
+    private function breakdownAdjustment(): Modifiers
     {
-        return new Adjustments(
+        return new Modifiers(
             $this->adjusters->map($this->createAdjustment()),
             $this->unitPrice->getCurrency(),
             $this->unitPrice->getContext(),
@@ -99,7 +99,7 @@ final class AdjustmentManager
 
     private function createAdjustment(): callable
     {
-        return fn(AdjusterScheme $adjuster) => new Adjustment(
+        return fn(AdjusterScheme $adjuster) => new Modifier(
             ExclusiveAdjustmentHandler::apply($this->unitPrice, $this->quantity, $adjuster),
             $adjuster->type(),
             $adjuster->mode(),

@@ -12,7 +12,7 @@ use Vaened\PriceEngine\Adjustments\AdjusterMode;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
 use Vaened\PriceEngine\Adjustments\AdjusterType;
 
-final class Adjustment implements AdjusterScheme
+final class Modifier implements AdjusterScheme
 {
     public function __construct(
         private readonly Money        $amount,

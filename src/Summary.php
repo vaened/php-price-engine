@@ -17,11 +17,11 @@ interface Summary
 
     public function subtotal(): Price;
 
-    public function taxes(): Adjustments;
+    public function taxes(): Modifiers;
 
-    public function charges(): Adjustments;
+    public function charges(): Modifiers;
 
-    public function discounts(): Adjustments;
+    public function discounts(): Modifiers;
 
     public function total(): Money;
 }

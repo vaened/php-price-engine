@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Tests\Cashiers;
 
 use Brick\Money\Money;
-use Vaened\PriceEngine\Adjustment;
-use Vaened\PriceEngine\Adjustments;
+use Vaened\PriceEngine\Modifier;
+use Vaened\PriceEngine\Modifiers;
 use Vaened\PriceEngine\Cashier;
 use Vaened\PriceEngine\Tests\TestCase;
 use Vaened\PriceEngine\Tests\Utils\Summary;
@@ -33,7 +33,7 @@ abstract class CashierTestCase extends TestCase
         $this->cashier = $this->cashier();
     }
 
-    public function assertDiscounts(Adjustment ...$expected): void
+    public function assertDiscounts(Modifier ...$expected): void
     {
         each(
             $this->assertAdjustmentEquals($this->cashier->discounts()),
@@ -41,7 +41,7 @@ abstract class CashierTestCase extends TestCase
         );
     }
 
-    public function assertCharges(Adjustment ...$expected): void
+    public function assertCharges(Modifier ...$expected): void
     {
         each(
             $this->assertAdjustmentEquals($this->cashier->charges()),
@@ -49,7 +49,7 @@ abstract class CashierTestCase extends TestCase
         );
     }
 
-    public function assertTaxes(Adjustment ...$expected): void
+    public function assertTaxes(Modifier ...$expected): void
     {
         each(
             $this->assertAdjustmentEquals($this->cashier->taxes()),
@@ -108,9 +108,9 @@ abstract class CashierTestCase extends TestCase
         );
     }
 
-    private function assertAdjustmentEquals(Adjustments $adjustments): callable
+    private function assertAdjustmentEquals(Modifiers $adjustments): callable
     {
-        return static function (Adjustment $expected) use ($adjustments) {
+        return static function (Modifier $expected) use ($adjustments) {
             $adjustment = $adjustments->locate($expected->code());
 
             self::assertNotNull(

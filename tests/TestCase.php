@@ -10,8 +10,8 @@ namespace Vaened\PriceEngine\Tests;
 use Brick\Money\Context\CustomContext;
 use Brick\Money\Money;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
-use Vaened\PriceEngine\Adjustment;
-use Vaened\PriceEngine\Adjustments;
+use Vaened\PriceEngine\Modifier;
+use Vaened\PriceEngine\Modifiers;
 use Vaened\PriceEngine\Adjustments\AdjusterScheme;
 use Vaened\Support\Types\ArrayList;
 
@@ -24,15 +24,15 @@ abstract class TestCase extends PhpUnitTestCase
         return Money::zero('USD', new CustomContext(4));
     }
 
-    protected static function collect(array $adjustments): Adjustments
+    protected static function collect(array $adjustments): Modifiers
     {
         $default = self::defaultAmount();
-        return new Adjustments(new ArrayList($adjustments), $default->getCurrency(), $default->getContext());
+        return new Modifiers(new ArrayList($adjustments), $default->getCurrency(), $default->getContext());
     }
 
-    protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Adjustment
+    protected static function createAdjustment(float $amount, AdjusterScheme $scheme): Modifier
     {
-        return new Adjustment(self::money($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
+        return new Modifier(self::money($amount), $scheme->type(), $scheme->mode(), $scheme->value(), $scheme->code());
     }
 
     protected static function money(float $amount): Money

@@ -66,7 +66,7 @@ $cashier->add(
 
 ### Obtaining Individual Totals
 
-To obtain individual values of any price adjuster, you can use the `tax()` `charge()`, or `discount()` functions, all of which receive the code established during creation and return an instance of [`Adjustment`](./src/Adjustment.php)
+To obtain individual values of any price adjuster, you can use the `tax()` `charge()`, or `discount()` functions, all of which receive the code established during creation and return an instance of [`Adjustment`](./src/Modifier.php)
 
 ```php
 $cashier->taxes()->locate('IVA');

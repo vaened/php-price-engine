@@ -67,9 +67,9 @@ abstract class Cashier implements Summary
         $this->discounts->remove($discountCode);
     }
 
-    public function discounts(): Adjustments
+    public function discounts(): Modifiers
     {
-        return $this->discounts->adjustments();
+        return $this->discounts->modifiers();
     }
 
     public function add(Charge ...$charges): void
@@ -82,14 +82,14 @@ abstract class Cashier implements Summary
         $this->charges->remove($chargeCode);
     }
 
-    public function charges(): Adjustments
+    public function charges(): Modifiers
     {
-        return $this->charges->adjustments();
+        return $this->charges->modifiers();
     }
 
-    public function taxes(): Adjustments
+    public function taxes(): Modifiers
     {
-        return $this->taxes->adjustments();
+        return $this->taxes->modifiers();
     }
 
     public function quantity(): int

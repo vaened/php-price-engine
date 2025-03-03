@@ -16,7 +16,7 @@ use Vaened\Support\Types\SecureList;
 
 use function Lambdish\Phunctional\reduce;
 
-final class Adjustments extends SecureList
+final class Modifiers extends SecureList
 {
     private readonly Money $total;
 
@@ -26,7 +26,7 @@ final class Adjustments extends SecureList
         $this->sumTotals(initial: Money::zero($moneyCurrency, $moneyContext));
     }
 
-    public function locate(BackedEnum|UnitEnum|string $code): ?Adjustment
+    public function locate(BackedEnum|UnitEnum|string $code): ?Modifier
     {
         return $this->items[Helper::processEnumerableCode($code)] ?? null;
     }
@@ -38,7 +38,7 @@ final class Adjustments extends SecureList
 
     protected function safelyProcessItems(iterable $items): array
     {
-        return reduce(static function (array $acc, Adjustment $adjustment) {
+        return reduce(static function (array $acc, Modifier $adjustment) {
             $acc[$adjustment->code()] = $adjustment;
             return $acc;
         }, $items, initial: []);
@@ -47,7 +47,7 @@ final class Adjustments extends SecureList
     private function sumTotals(Money $initial): void
     {
         $this->total = $this->reduce(
-            static fn(?Money $acc, Adjustment $adjustment) => null === $acc
+            static fn(?Money $acc, Modifier $adjustment) => null === $acc
                 ? $adjustment->amount()
                 : $acc->plus($adjustment->amount()),
             $initial
@@ -56,6 +56,6 @@ final class Adjustments extends SecureList
 
     public static function type(): string
     {
-        return Adjustment::class;
+        return Modifier::class;
     }
 }
