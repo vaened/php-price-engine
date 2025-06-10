@@ -11,14 +11,14 @@ use Brick\Math\RoundingMode;
 
 final class PriceEngineConfig
 {
-    private static int $roundingMode = RoundingMode::HALF_EVEN;
+    private static RoundingMode $roundingMode = RoundingMode::HALF_EVEN;
 
-    public static function setDefaultRoundingMode(int $roundingMode): void
+    public static function setDefaultRoundingMode(RoundingMode $roundingMode): void
     {
         self::$roundingMode = $roundingMode;
     }
 
-    public static function defaultRoundingMode(): int
+    public static function defaultRoundingMode(): RoundingMode
     {
         return self::$roundingMode;
     }

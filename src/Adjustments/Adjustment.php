@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Vaened\PriceEngine\Adjustments;
 
 use BackedEnum;
+use Brick\Math\RoundingMode;
 use ReflectionClass;
 use UnitEnum;
 use Vaened\PriceEngine\PriceEngineConfig;
@@ -66,7 +67,7 @@ class Adjustment implements AdjustmentScheme
         return $this->value;
     }
 
-    protected function roundingMode(): int
+    protected function roundingMode(): RoundingMode
     {
         return PriceEngineConfig::defaultRoundingMode();
     }
