@@ -23,7 +23,7 @@ final class Helper
         };
     }
 
-    public static function percentageize(int $percentage): float
+    public static function percentageize(float $percentage): float
     {
         return $percentage / 100;
     }
